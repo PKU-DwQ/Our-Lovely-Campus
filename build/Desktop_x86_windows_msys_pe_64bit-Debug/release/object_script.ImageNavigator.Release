@@ -1,0 +1,10 @@
+release/main.o
+release/imageviewer.o
+release/navigationwidget.o
+release/imageviewer.o
+release/main.o
+release/mainwindow.o
+release/navigationwidget.o
+release/moc_imageviewer.o
+release/moc_navigationwidget.o
+release/moc_mainwindow.o
