@@ -59,29 +59,25 @@ public:
         QSize targetSize(64, 64);
         QPixmap scaledIcon = currentIcon.scaled(targetSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-        // 检查图标是否在可见区域内
-        if (iconX >= 0 && iconY >= 0 &&
-            iconX < painter.window().width() &&
-            iconY < painter.window().height()) {
-            painter.drawPixmap(iconX, iconY, scaledIcon);
-        }
-        else {
-            setVisible(false);
-        }
+        // 绘制图标
+        painter.drawPixmap(iconX, iconY, scaledIcon);
+
+        // 更新实际显示的边界矩形（仅用于悬停检测）
+        m_actualRect = QRect(iconX, iconY, scaledIcon.width(), scaledIcon.height());
     }
-    // 添加可点击图标的支持
+    // 限制悬停检测到实际图标区域
     QRect boundingRect(const QPoint& offset) const {
         if (!isVisible()) return QRect();
-        QPixmap currentIcon = m_isHovered ? m_icon1 : m_icon2;
+        // 计算实际显示的图标区域
         return QRect(
             m_position.x() - offset.x(),
             m_position.y() - offset.y(),
-            currentIcon.width()*2,
-            currentIcon.height()*2
+            m_icon1.width(),
+            m_icon1.height()
             );
     }
     bool containsPoint(const QPoint& point, const QPoint& offset) const {
-        return boundingRect(offset).contains(point);
+        return m_actualRect.contains(point);
     }
     void onClicked() {
         qDebug() << "图标被点击了";
@@ -110,10 +106,10 @@ private:
     }
     QPixmap m_icon1; // 第一个图标
     QPixmap m_icon2; // 第二个图标
-    QPixmap m_icon;  // 当前使用的图标
     QPoint m_position;
     bool m_visible;
     bool m_isHovered;
+    mutable QRect m_actualRect; // 缓存实际显示的矩形
 };
 
 class ImageViewer : public QWidget {
@@ -217,11 +213,11 @@ public:
             QWidget::mousePressEvent(event); // 传递事件给父类
         }
     }
-    //处理鼠标移动
-    void mouseMoveEvent(QMouseEvent* event) override{
+    // 处理鼠标移动
+    void mouseMoveEvent(QMouseEvent* event) override {
         QWidget::mouseMoveEvent(event);
-        bool isHovered=m_mapIcon.containsPoint(event->pos(),m_offset);
-        if (isHovered!=m_mapIcon.isHovered()){
+        bool isHovered = m_mapIcon.containsPoint(event->pos(), m_offset);
+        if (isHovered != m_mapIcon.isHovered()) {
             m_mapIcon.setIsHovered(isHovered);
             update();
         }
@@ -317,29 +313,29 @@ private:
             "   color: white;"
             "   border: none;"
             "   border-radius: 30px;"
-            "}"
+            "} "
             "QPushButton:hover {"
             "   background-color: rgba(80, 120, 190, 235);"
-            "}"
+            "} "
             "QPushButton:pressed {"
             "   background-color: rgba(40, 70, 120, 210);"
-            "}"
+            "} "
             );
         QString buttonStyle2 = QString(
             "QPushButton {"
-            "   font-size: 36px;"
-            "   min-width: 30px; min-height: 260px;"
+            "   font-size: 36px; "
+            "   min-width: 30px; min-height: 260px; "
             "   background-color: rgba(60, 90, 140, 220);"
-            "   color: white;"
+            "   color: white; "
             "   border: none;"
-            "   border-radius: 30px;"
-            "}"
+            "   border-radius: 30px; "
+            "} "
             "QPushButton:hover {"
             "   background-color: rgba(80, 120, 190, 235);"
-            "}"
+            "} "
             "QPushButton:pressed {"
             "   background-color: rgba(40, 70, 120, 210);"
-            "}"
+            "} "
             );
         btnUp->setStyleSheet(buttonStyle1);
         btnDown->setStyleSheet(buttonStyle1);
@@ -426,7 +422,7 @@ private:
             "   color: white;"
             "   border-radius: 4px;"
             "   min-width: 80px;"
-            "}"
+            "} "
             "QPushButton:hover { background-color: #5b5f7c; }"
             "QPushButton:pressed { background-color: #3c3f55; }"
             );
