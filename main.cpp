@@ -15,9 +15,12 @@
 #include <QHoverEvent>
 #include <QWindow>
 #include <QLabel>
+
 // 图标类
 class MapIcon {
 public:
+    QPixmap m_icon1; // 第一个图标
+    QPixmap m_icon2; // 第二个图标
     MapIcon() : m_visible(false), m_isHovered(false) {
         // 尝试加载默认图标
         if (!m_icon1.load(":/icon/1.jpg")) {
@@ -56,7 +59,7 @@ public:
         QPixmap currentIcon = m_isHovered ? m_icon2 : m_icon1;
 
         // 定义目标大小（例如 64x64）
-        QSize targetSize(64, 64);
+        QSize targetSize(128,128);
         QPixmap scaledIcon = currentIcon.scaled(targetSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
         // 绘制图标
@@ -104,8 +107,6 @@ private:
         painter.setBrush(QBrush(QColor(255, 100, 100, 180)));
         painter.drawRect(4, 4, 24, 24);
     }
-    QPixmap m_icon1; // 第一个图标
-    QPixmap m_icon2; // 第二个图标
     QPoint m_position;
     bool m_visible;
     bool m_isHovered;
@@ -149,6 +150,8 @@ public:
         }
         // 绘制地图图标
         m_mapIcon.draw(painter, m_offset);
+        // 绘制新的湖图标
+        m_lakeIcon.draw(painter, m_offset);
         // 绘制信息栏
         painter.fillRect(0, 0, width(), 30, QColor(0, 0, 0, 150));
         painter.setPen(Qt::white);
@@ -188,7 +191,7 @@ public:
     }
     // 处理鼠标事件
     void mousePressEvent(QMouseEvent* event) override {
-        if (!m_mapIcon.isVisible()) {
+        if (!m_mapIcon.isVisible() && !m_lakeIcon.isVisible()) {
             QWidget::mousePressEvent(event); // 如果图标不可见，传递事件给父类
             return;
         }
@@ -209,6 +212,23 @@ public:
             m_mapIcon.onClicked();
             update();
             event->accept(); // 消耗事件，表示已处理
+        }
+        // 检查是否点击在湖图标上
+        else if (m_lakeIcon.containsPoint(event->pos(), m_offset)) {
+            QWidget* newWindow = new QWidget();
+            newWindow->setWindowTitle("湖详情");
+            newWindow->resize(400, 300);
+
+            // 在新窗口中绘制内容
+            QLabel* label = new QLabel("这是湖的详情窗口", newWindow);
+            label->setAlignment(Qt::AlignCenter);
+            label->setFont(QFont("Arial", 16));
+
+            newWindow->show();
+
+            m_lakeIcon.onClicked();
+            update();
+            event->accept(); // 消耗事件，表示已处理
         } else {
             QWidget::mousePressEvent(event); // 传递事件给父类
         }
@@ -216,9 +236,15 @@ public:
     // 处理鼠标移动
     void mouseMoveEvent(QMouseEvent* event) override {
         QWidget::mouseMoveEvent(event);
-        bool isHovered = m_mapIcon.containsPoint(event->pos(), m_offset);
-        if (isHovered != m_mapIcon.isHovered()) {
-            m_mapIcon.setIsHovered(isHovered);
+        bool isHoveredMap = m_mapIcon.containsPoint(event->pos(), m_offset);
+        bool isHoveredLake = m_lakeIcon.containsPoint(event->pos(), m_offset);
+
+        if (isHoveredMap != m_mapIcon.isHovered()) {
+            m_mapIcon.setIsHovered(isHoveredMap);
+            update();
+        }
+        if (isHoveredLake != m_lakeIcon.isHovered()) {
+            m_lakeIcon.setIsHovered(isHoveredLake);
             update();
         }
     }
@@ -250,6 +276,8 @@ public:
             this->moveView(10, 0);
         }
     }
+    void setLakeIconPosition(int x,int y);
+    void loadLakeIconImages(const QString& normalPath, const QString& hoverPath);
 private:
     void createErrorImage()
     {
@@ -268,7 +296,42 @@ private:
     QPixmap m_background;
     QPoint m_offset;
     MapIcon m_mapIcon; // 地图图标
+
+    // 新增湖图标
+    MapIcon m_lakeIcon;
 };
+// 以下是为湖图标添加的功能
+void ImageViewer::setLakeIconPosition(int x, int y) {
+    m_lakeIcon.setPosition(x, y);
+    m_lakeIcon.setVisible(true);
+}
+
+void ImageViewer::loadLakeIconImages(const QString& normalPath, const QString& hoverPath) {
+    // 尝试加载普通状态图片
+    if (!m_lakeIcon.m_icon1.load(normalPath)) {
+        qDebug() << "无法加载湖图标普通状态图片:" << normalPath;
+        // 创建简单的默认图标
+        m_lakeIcon.m_icon1 = QPixmap(32, 32);
+        m_lakeIcon.m_icon1.fill(Qt::transparent);
+        QPainter painter(&m_lakeIcon.m_icon1);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setPen(QPen(Qt::blue, 2));
+        painter.setBrush(QBrush(QColor(100, 200, 255, 180)));
+        painter.drawEllipse(4, 4, 24, 24);
+    }
+    // 尝试加载悬停状态图片
+    if (!m_lakeIcon.m_icon2.load(hoverPath)) {
+        qDebug() << "无法加载湖图标悬停状态图片:" << hoverPath;
+        // 创建简单的默认图标
+        m_lakeIcon.m_icon2 = QPixmap(32, 32);
+        m_lakeIcon.m_icon2.fill(Qt::transparent);
+        QPainter painter(&m_lakeIcon.m_icon2);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setPen(QPen(Qt::red, 2));
+        painter.setBrush(QBrush(QColor(255, 100, 100, 180)));
+        painter.drawRect(4, 4, 24, 24);
+    }
+}
 
 class NavigationWidget : public QWidget {
 public:
@@ -293,6 +356,9 @@ public:
         resize(1000, 500);
         m_imageViewer->setFocus();
 
+        // 设置湖图标位置和图片
+        m_imageViewer->setLakeIconPosition(1690, 1300);
+        m_imageViewer->loadLakeIconImages(":/photo/lake1.jpg", ":/photo/lake2.jpg");
     }
 
 private:
@@ -473,6 +539,7 @@ private:
     QGridLayout* m_layout;
     ImageViewer* m_imageViewer;
 };
+
 
 int main(int argc, char* argv[])
 {

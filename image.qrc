@@ -3,5 +3,7 @@
         <file>map.jpg</file>
         <file>icon/1.jpg</file>
         <file>icon/2.jpg</file>
+        <file>photo/lake1.jpg</file>
+        <file>photo/lake2.jpg</file>
     </qresource>
 </RCC>
