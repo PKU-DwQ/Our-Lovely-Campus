@@ -11,13 +11,23 @@
 #include <QPoint>
 #include <QTimer>
 #include <QKeyEvent>
-    // 图标类
+#include <QMouseEvent>
+#include <QHoverEvent>
+#include <QWindow>
+#include <QLabel>
+// 图标类
 class MapIcon {
 public:
-    MapIcon() : m_visible(false) {
-        if (!m_icon.load(":/icon/1.jpg")) {
+    MapIcon() : m_visible(false), m_isHovered(false) {
+        // 尝试加载默认图标
+        if (!m_icon1.load(":/icon/1.jpg")) {
             qDebug() << "无法加载图标1.jpg";
-            createDefaultIcon();
+            createDefaultIcon1();
+        }
+        // 尝试加载新图标
+        if (!m_icon2.load(":/icon/2.jpg")) {
+            qDebug() << "无法加载图标2.jpg";
+            createDefaultIcon2();
         }
     }
     void setPosition(int x, int y) {
@@ -32,43 +42,79 @@ public:
     bool isVisible() const {
         return m_visible;
     }
+    void setIsHovered(bool isHovered) {
+        m_isHovered = isHovered;
+    }
+    bool isHovered() const {
+        return m_isHovered;
+    }
     void draw(QPainter& painter, const QPoint& offset) {
-        if (!m_visible || m_icon.isNull()) return;
+        if (!m_visible) return;
 
         int iconX = m_position.x() - offset.x();
         int iconY = m_position.y() - offset.y();
+        QPixmap currentIcon = m_isHovered ? m_icon2 : m_icon1;
 
         // 定义目标大小（例如 64x64）
         QSize targetSize(64, 64);
-        QPixmap scaledIcon = m_icon.scaled(targetSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        QPixmap scaledIcon = currentIcon.scaled(targetSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-       // 检查图标是否在可见区域内
+        // 检查图标是否在可见区域内
         if (iconX >= 0 && iconY >= 0 &&
             iconX < painter.window().width() &&
             iconY < painter.window().height()) {
-            // 定义目标大小（例如 64x64）
             painter.drawPixmap(iconX, iconY, scaledIcon);
         }
         else {
             setVisible(false);
         }
     }
-private:
-    void createDefaultIcon() {
-        m_icon = QPixmap(32, 32);
-        m_icon.fill(Qt::transparent);
+    // 添加可点击图标的支持
+    QRect boundingRect(const QPoint& offset) const {
+        if (!isVisible()) return QRect();
+        QPixmap currentIcon = m_isHovered ? m_icon1 : m_icon2;
+        return QRect(
+            m_position.x() - offset.x(),
+            m_position.y() - offset.y(),
+            currentIcon.width()*2,
+            currentIcon.height()*2
+            );
+    }
+    bool containsPoint(const QPoint& point, const QPoint& offset) const {
+        return boundingRect(offset).contains(point);
+    }
+    void onClicked() {
+        qDebug() << "图标被点击了";
+    }
 
-        QPainter painter(&m_icon);
+private:
+    void createDefaultIcon1() {
+        // 创建默认图标1
+        m_icon1 = QPixmap(32, 32);
+        m_icon1.fill(Qt::transparent);
+        QPainter painter(&m_icon1);
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setPen(QPen(Qt::blue, 2));
         painter.setBrush(QBrush(QColor(100, 200, 255, 180)));
         painter.drawEllipse(4, 4, 24, 24);
     }
-    QPixmap m_icon;
+    void createDefaultIcon2() {
+        // 创建默认图标2（不同样式）
+        m_icon2 = QPixmap(32, 32);
+        m_icon2.fill(Qt::transparent);
+        QPainter painter(&m_icon2);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setPen(QPen(Qt::red, 2));
+        painter.setBrush(QBrush(QColor(255, 100, 100, 180)));
+        painter.drawRect(4, 4, 24, 24);
+    }
+    QPixmap m_icon1; // 第一个图标
+    QPixmap m_icon2; // 第二个图标
+    QPixmap m_icon;  // 当前使用的图标
     QPoint m_position;
     bool m_visible;
+    bool m_isHovered;
 };
-
 
 class ImageViewer : public QWidget {
 public:
@@ -76,7 +122,6 @@ public:
         Q_UNUSED(event);
         setFocus(); // 确保获得焦点
     }
-
     explicit ImageViewer(const QString& imagePath, QWidget* parent = nullptr)
         : QWidget(parent), m_offset(780, 1080) //初始地点:未名湖畔
     {
@@ -86,13 +131,14 @@ public:
         }
         setMinimumSize(600, 300);
         setFocusPolicy(Qt::StrongFocus); // 允许接收键盘事件
+        setMouseTracking(true); // 默认不跟踪鼠标
     }
     void paintEvent(QPaintEvent* event) override
     {
         Q_UNUSED(event);
         QPainter painter(this);
         // 绘制背景
-        painter.fillRect(rect(), QColor(50, 50, 60));
+        painter.fillRect(rect(), QColor(50,50,60));
         if (!m_background.isNull()) {
             // 计算实际显示区域
             int drawWidth = qMin(width(), m_background.width());
@@ -144,7 +190,42 @@ public:
     QPoint getOffset() const {
         return m_offset;
     }
+    // 处理鼠标事件
+    void mousePressEvent(QMouseEvent* event) override {
+        if (!m_mapIcon.isVisible()) {
+            QWidget::mousePressEvent(event); // 如果图标不可见，传递事件给父类
+            return;
+        }
 
+        // 检查是否点击在图标上
+        if (m_mapIcon.containsPoint(event->pos(), m_offset)) {
+            QWidget* newWindow = new QWidget();
+            newWindow->setWindowTitle("新窗口");
+            newWindow->resize(400, 300);
+
+            // 在新窗口中绘制内容
+            QLabel* label = new QLabel("这是新窗口的内容", newWindow);
+            label->setAlignment(Qt::AlignCenter);
+            label->setFont(QFont("Arial", 16));
+
+            newWindow->show();
+
+            m_mapIcon.onClicked();
+            update();
+            event->accept(); // 消耗事件，表示已处理
+        } else {
+            QWidget::mousePressEvent(event); // 传递事件给父类
+        }
+    }
+    //处理鼠标移动
+    void mouseMoveEvent(QMouseEvent* event) override{
+        QWidget::mouseMoveEvent(event);
+        bool isHovered=m_mapIcon.containsPoint(event->pos(),m_offset);
+        if (isHovered!=m_mapIcon.isHovered()){
+            m_mapIcon.setIsHovered(isHovered);
+            update();
+        }
+    }
     // 处理键盘事件
     void keyPressEvent(QKeyEvent* event) override {
         if (event->key() == Qt::Key_Space) {
