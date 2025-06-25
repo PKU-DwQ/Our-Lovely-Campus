@@ -11,13 +11,26 @@
 #include <QPoint>
 #include <QTimer>
 #include <QKeyEvent>
-    // 图标类
+#include <QMouseEvent>
+#include <QHoverEvent>
+#include <QWindow>
+#include <QLabel>
+
+// 图标类
 class MapIcon {
 public:
-    MapIcon() : m_visible(false) {
-        if (!m_icon.load(":/icon/1.jpg")) {
+    QPixmap m_icon1; // 第一个图标
+    QPixmap m_icon2; // 第二个图标
+    MapIcon() : m_visible(false), m_isHovered(false) {
+        // 尝试加载默认图标
+        if (!m_icon1.load(":/icon/1.jpg")) {
             qDebug() << "无法加载图标1.jpg";
-            createDefaultIcon();
+            createDefaultIcon1();
+        }
+        // 尝试加载新图标
+        if (!m_icon2.load(":/icon/2.jpg")) {
+            qDebug() << "无法加载图标2.jpg";
+            createDefaultIcon2();
         }
     }
     void setPosition(int x, int y) {
@@ -32,43 +45,73 @@ public:
     bool isVisible() const {
         return m_visible;
     }
+    void setIsHovered(bool isHovered) {
+        m_isHovered = isHovered;
+    }
+    bool isHovered() const {
+        return m_isHovered;
+    }
     void draw(QPainter& painter, const QPoint& offset) {
-        if (!m_visible || m_icon.isNull()) return;
+        if (!m_visible) return;
 
         int iconX = m_position.x() - offset.x();
         int iconY = m_position.y() - offset.y();
+        QPixmap currentIcon = m_isHovered ? m_icon2 : m_icon1;
 
         // 定义目标大小（例如 64x64）
-        QSize targetSize(64, 64);
-        QPixmap scaledIcon = m_icon.scaled(targetSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        QSize targetSize(128,128);
+        QPixmap scaledIcon = currentIcon.scaled(targetSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-       // 检查图标是否在可见区域内
-        if (iconX >= 0 && iconY >= 0 &&
-            iconX < painter.window().width() &&
-            iconY < painter.window().height()) {
-            // 定义目标大小（例如 64x64）
-            painter.drawPixmap(iconX, iconY, scaledIcon);
-        }
-        else {
-            setVisible(false);
-        }
+        // 绘制图标
+        painter.drawPixmap(iconX, iconY, scaledIcon);
+
+        // 更新实际显示的边界矩形（仅用于悬停检测）
+        m_actualRect = QRect(iconX, iconY, scaledIcon.width(), scaledIcon.height());
     }
-private:
-    void createDefaultIcon() {
-        m_icon = QPixmap(32, 32);
-        m_icon.fill(Qt::transparent);
+    // 限制悬停检测到实际图标区域
+    QRect boundingRect(const QPoint& offset) const {
+        if (!isVisible()) return QRect();
+        // 计算实际显示的图标区域
+        return QRect(
+            m_position.x() - offset.x(),
+            m_position.y() - offset.y(),
+            m_icon1.width(),
+            m_icon1.height()
+            );
+    }
+    bool containsPoint(const QPoint& point, const QPoint& offset) const {
+        return m_actualRect.contains(point);
+    }
+    void onClicked() {
+        qDebug() << "图标被点击了";
+    }
 
-        QPainter painter(&m_icon);
+private:
+    void createDefaultIcon1() {
+        // 创建默认图标1
+        m_icon1 = QPixmap(32, 32);
+        m_icon1.fill(Qt::transparent);
+        QPainter painter(&m_icon1);
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setPen(QPen(Qt::blue, 2));
         painter.setBrush(QBrush(QColor(100, 200, 255, 180)));
         painter.drawEllipse(4, 4, 24, 24);
     }
-    QPixmap m_icon;
+    void createDefaultIcon2() {
+        // 创建默认图标2（不同样式）
+        m_icon2 = QPixmap(32, 32);
+        m_icon2.fill(Qt::transparent);
+        QPainter painter(&m_icon2);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setPen(QPen(Qt::red, 2));
+        painter.setBrush(QBrush(QColor(255, 100, 100, 180)));
+        painter.drawRect(4, 4, 24, 24);
+    }
     QPoint m_position;
     bool m_visible;
+    bool m_isHovered;
+    mutable QRect m_actualRect; // 缓存实际显示的矩形
 };
-
 
 class ImageViewer : public QWidget {
 public:
@@ -76,7 +119,6 @@ public:
         Q_UNUSED(event);
         setFocus(); // 确保获得焦点
     }
-
     explicit ImageViewer(const QString& imagePath, QWidget* parent = nullptr)
         : QWidget(parent), m_offset(780, 1080) //初始地点:未名湖畔
     {
@@ -86,13 +128,14 @@ public:
         }
         setMinimumSize(600, 300);
         setFocusPolicy(Qt::StrongFocus); // 允许接收键盘事件
+        setMouseTracking(true); // 默认不跟踪鼠标
     }
     void paintEvent(QPaintEvent* event) override
     {
         Q_UNUSED(event);
         QPainter painter(this);
         // 绘制背景
-        painter.fillRect(rect(), QColor(50, 50, 60));
+        painter.fillRect(rect(), QColor(50,50,60));
         if (!m_background.isNull()) {
             // 计算实际显示区域
             int drawWidth = qMin(width(), m_background.width());
@@ -107,6 +150,8 @@ public:
         }
         // 绘制地图图标
         m_mapIcon.draw(painter, m_offset);
+        // 绘制新的湖图标
+        m_lakeIcon.draw(painter, m_offset);
         // 绘制信息栏
         painter.fillRect(0, 0, width(), 30, QColor(0, 0, 0, 150));
         painter.setPen(Qt::white);
@@ -144,7 +189,65 @@ public:
     QPoint getOffset() const {
         return m_offset;
     }
+    // 处理鼠标事件
+    void mousePressEvent(QMouseEvent* event) override {
+        if (!m_mapIcon.isVisible() && !m_lakeIcon.isVisible()) {
+            QWidget::mousePressEvent(event); // 如果图标不可见，传递事件给父类
+            return;
+        }
 
+        // 检查是否点击在图标上
+        if (m_mapIcon.containsPoint(event->pos(), m_offset)) {
+            QWidget* newWindow = new QWidget();
+            newWindow->setWindowTitle("新窗口");
+            newWindow->resize(400, 300);
+
+            // 在新窗口中绘制内容
+            QLabel* label = new QLabel("这是新窗口的内容", newWindow);
+            label->setAlignment(Qt::AlignCenter);
+            label->setFont(QFont("Arial", 16));
+
+            newWindow->show();
+
+            m_mapIcon.onClicked();
+            update();
+            event->accept(); // 消耗事件，表示已处理
+        }
+        // 检查是否点击在湖图标上
+        else if (m_lakeIcon.containsPoint(event->pos(), m_offset)) {
+            QWidget* newWindow = new QWidget();
+            newWindow->setWindowTitle("湖详情");
+            newWindow->resize(400, 300);
+
+            // 在新窗口中绘制内容
+            QLabel* label = new QLabel("这是湖的详情窗口", newWindow);
+            label->setAlignment(Qt::AlignCenter);
+            label->setFont(QFont("Arial", 16));
+
+            newWindow->show();
+
+            m_lakeIcon.onClicked();
+            update();
+            event->accept(); // 消耗事件，表示已处理
+        } else {
+            QWidget::mousePressEvent(event); // 传递事件给父类
+        }
+    }
+    // 处理鼠标移动
+    void mouseMoveEvent(QMouseEvent* event) override {
+        QWidget::mouseMoveEvent(event);
+        bool isHoveredMap = m_mapIcon.containsPoint(event->pos(), m_offset);
+        bool isHoveredLake = m_lakeIcon.containsPoint(event->pos(), m_offset);
+
+        if (isHoveredMap != m_mapIcon.isHovered()) {
+            m_mapIcon.setIsHovered(isHoveredMap);
+            update();
+        }
+        if (isHoveredLake != m_lakeIcon.isHovered()) {
+            m_lakeIcon.setIsHovered(isHoveredLake);
+            update();
+        }
+    }
     // 处理键盘事件
     void keyPressEvent(QKeyEvent* event) override {
         if (event->key() == Qt::Key_Space) {
@@ -173,6 +276,8 @@ public:
             this->moveView(10, 0);
         }
     }
+    void setLakeIconPosition(int x,int y);
+    void loadLakeIconImages(const QString& normalPath, const QString& hoverPath);
 private:
     void createErrorImage()
     {
@@ -191,7 +296,42 @@ private:
     QPixmap m_background;
     QPoint m_offset;
     MapIcon m_mapIcon; // 地图图标
+
+    // 新增湖图标
+    MapIcon m_lakeIcon;
 };
+// 以下是为湖图标添加的功能
+void ImageViewer::setLakeIconPosition(int x, int y) {
+    m_lakeIcon.setPosition(x, y);
+    m_lakeIcon.setVisible(true);
+}
+
+void ImageViewer::loadLakeIconImages(const QString& normalPath, const QString& hoverPath) {
+    // 尝试加载普通状态图片
+    if (!m_lakeIcon.m_icon1.load(normalPath)) {
+        qDebug() << "无法加载湖图标普通状态图片:" << normalPath;
+        // 创建简单的默认图标
+        m_lakeIcon.m_icon1 = QPixmap(32, 32);
+        m_lakeIcon.m_icon1.fill(Qt::transparent);
+        QPainter painter(&m_lakeIcon.m_icon1);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setPen(QPen(Qt::blue, 2));
+        painter.setBrush(QBrush(QColor(100, 200, 255, 180)));
+        painter.drawEllipse(4, 4, 24, 24);
+    }
+    // 尝试加载悬停状态图片
+    if (!m_lakeIcon.m_icon2.load(hoverPath)) {
+        qDebug() << "无法加载湖图标悬停状态图片:" << hoverPath;
+        // 创建简单的默认图标
+        m_lakeIcon.m_icon2 = QPixmap(32, 32);
+        m_lakeIcon.m_icon2.fill(Qt::transparent);
+        QPainter painter(&m_lakeIcon.m_icon2);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setPen(QPen(Qt::red, 2));
+        painter.setBrush(QBrush(QColor(255, 100, 100, 180)));
+        painter.drawRect(4, 4, 24, 24);
+    }
+}
 
 class NavigationWidget : public QWidget {
 public:
@@ -216,6 +356,9 @@ public:
         resize(1000, 500);
         m_imageViewer->setFocus();
 
+        // 设置湖图标位置和图片
+        m_imageViewer->setLakeIconPosition(1690, 1300);
+        m_imageViewer->loadLakeIconImages(":/photo/lake1.jpg", ":/photo/lake2.jpg");
     }
 
 private:
@@ -236,29 +379,29 @@ private:
             "   color: white;"
             "   border: none;"
             "   border-radius: 30px;"
-            "}"
+            "} "
             "QPushButton:hover {"
             "   background-color: rgba(80, 120, 190, 235);"
-            "}"
+            "} "
             "QPushButton:pressed {"
             "   background-color: rgba(40, 70, 120, 210);"
-            "}"
+            "} "
             );
         QString buttonStyle2 = QString(
             "QPushButton {"
-            "   font-size: 36px;"
-            "   min-width: 30px; min-height: 260px;"
+            "   font-size: 36px; "
+            "   min-width: 30px; min-height: 260px; "
             "   background-color: rgba(60, 90, 140, 220);"
-            "   color: white;"
+            "   color: white; "
             "   border: none;"
-            "   border-radius: 30px;"
-            "}"
+            "   border-radius: 30px; "
+            "} "
             "QPushButton:hover {"
             "   background-color: rgba(80, 120, 190, 235);"
-            "}"
+            "} "
             "QPushButton:pressed {"
             "   background-color: rgba(40, 70, 120, 210);"
-            "}"
+            "} "
             );
         btnUp->setStyleSheet(buttonStyle1);
         btnDown->setStyleSheet(buttonStyle1);
@@ -345,7 +488,7 @@ private:
             "   color: white;"
             "   border-radius: 4px;"
             "   min-width: 80px;"
-            "}"
+            "} "
             "QPushButton:hover { background-color: #5b5f7c; }"
             "QPushButton:pressed { background-color: #3c3f55; }"
             );
@@ -396,6 +539,7 @@ private:
     QGridLayout* m_layout;
     ImageViewer* m_imageViewer;
 };
+
 
 int main(int argc, char* argv[])
 {
