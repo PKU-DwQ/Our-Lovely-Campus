@@ -1,0 +1,35 @@
+#ifndef MAPICON_H
+#define MAPICON_H
+
+#include <QPixmap>
+#include <QPoint>
+#include <QPainter>
+#include <QDebug>
+#include <QRect>
+
+class MapIcon {
+public:
+    MapIcon();
+    void setPosition(int x, int y);
+    void toggleVisibility();
+    void setVisible(bool visible);
+    bool isVisible() const;
+    void setIsHovered(bool isHovered);
+    bool isHovered() const;
+    void draw(QPainter& painter, const QPoint& offset);
+    QRect boundingRect(const QPoint& offset) const;
+    bool containsPoint(const QPoint& point, const QPoint& offset) const;
+    void onClicked();
+
+    void createDefaultIcon1();
+    void createDefaultIcon2();
+
+    QPixmap m_icon1;
+    QPixmap m_icon2;
+    QPoint m_position;
+    bool m_visible;
+    bool m_isHovered;
+    mutable QRect m_actualRect; // 缓存实际显示的矩形
+};
+
+#endif // MAPICON_H
