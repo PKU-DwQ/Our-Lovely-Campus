@@ -7,8 +7,14 @@ void ImageViewer::focusInEvent(QFocusEvent* event) {
     setFocus(); // 确保获得焦点
 }
 
+void ImageViewer::setupMovingIcon(const QString& icon1Path, const QString& icon2Path, const QList<QPoint>& path) {
+    m_movingIcon = new MovingIcon(icon1Path, icon2Path, 1000, 50); // 切换间隔1秒，移动间隔50毫秒
+    m_movingIcon->setPath(path);
+    m_movingIcon->start();
+}
+
 ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
-    : QWidget(parent), m_offset(780, 1080) //初始地点:未名湖畔
+    : QWidget(parent), m_offset(780, 1080) // 初始地点:未名湖畔
 {
     if (!m_background.load(imagePath)) {
         qDebug() << "无法加载图片:" << imagePath;
@@ -17,7 +23,13 @@ ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
     setMinimumSize(600, 300);
     setFocusPolicy(Qt::StrongFocus); // 允许接收键盘事件
     setMouseTracking(true); // 默认不跟踪鼠标
+
+    // 设置移动图标
+    QList<QPoint> path;
+    path << QPoint(100, 100) << QPoint(100, 200) << QPoint(200, 200) << QPoint(200, 100) << QPoint(100, 100);
+    setupMovingIcon(":/photo/e1.jpg", ":/photo/e2.jpg", path);
 }
+
 
 void ImageViewer::paintEvent(QPaintEvent* event)
 {
@@ -42,6 +54,10 @@ void ImageViewer::paintEvent(QPaintEvent* event)
     // 绘制新的湖图标
     m_lakeIcon.draw(painter, m_offset);
     // 绘制信息栏
+    // 绘制移动图标
+    if (m_movingIcon) {
+        m_movingIcon->draw(painter, m_offset);
+    }
     painter.fillRect(0, 0, width(), 30, QColor(0, 0, 0, 150));
     painter.setPen(Qt::white);
     painter.setFont(QFont("Arial", 10));

@@ -10,6 +10,7 @@
 #include <QFocusEvent>
 #include <QDebug>
 #include "mapicon.h"
+#include "movingicon.h"
 
 class ImageViewer : public QWidget {
 public:
@@ -21,8 +22,9 @@ public:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
-    void setLakeIconPosition(int x,int y);
+    void setLakeIconPosition(int x, int y);
     void loadLakeIconImages(const QString& normalPath, const QString& hoverPath);
+    void setupMovingIcon(const QString& icon1Path, const QString& icon2Path, const QList<QPoint>& path);
 
 private:
     void createErrorImage();
@@ -30,6 +32,7 @@ private:
     QPoint m_offset;
     MapIcon m_mapIcon;
     MapIcon m_lakeIcon;
+    MovingIcon* m_movingIcon;
 };
 
 #endif // IMAGEVIEWER_H

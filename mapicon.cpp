@@ -42,7 +42,7 @@ void MapIcon::draw(QPainter& painter, const QPoint& offset) {
 
     int iconX = m_position.x() - offset.x();
     int iconY = m_position.y() - offset.y();
-    QPixmap currentIcon = m_isHovered ? m_icon2 : m_icon1;
+    QPixmap currentIcon = !m_isHovered ? m_icon1 : m_icon2;
 
     // 定义目标大小（例如 64x64）
     QSize targetSize(128, 128);

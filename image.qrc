@@ -5,5 +5,9 @@
         <file>icon/2.jpg</file>
         <file>photo/lake1.jpg</file>
         <file>photo/lake2.jpg</file>
+        <file>photo/e.gif</file>
+        <file>photo/e.mp4</file>
+        <file>photo/e1.jpg</file>
+        <file>photo/e2.jpg</file>
     </qresource>
 </RCC>

@@ -6,8 +6,10 @@
 #include <QPainter>
 #include <QDebug>
 #include <QRect>
+#include <QObject>
 
-class MapIcon {
+class MapIcon  : public QObject{
+    Q_OBJECT
 public:
     MapIcon();
     void setPosition(int x, int y);

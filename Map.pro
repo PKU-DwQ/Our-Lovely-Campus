@@ -1,5 +1,4 @@
 QT       += core gui
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -12,15 +11,17 @@ SOURCES += \
     imageviewer.cpp \
     main.cpp \
     mapicon.cpp \
+    movingicon.cpp \
     navigationwidget.cpp
 
 HEADERS += \
     imageviewer.h \
     mapicon.h \
+    movingicon.h \
     navigationwidget.h
 
 FORMS += \
-    mainwindow.ui
+    movingicon.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
