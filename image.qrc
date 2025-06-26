@@ -1,13 +1,14 @@
 <RCC>
     <qresource prefix="/">
-        <file>map.jpg</file>
         <file>icon/1.jpg</file>
         <file>icon/2.jpg</file>
-        <file>photo/lake1.jpg</file>
-        <file>photo/lake2.jpg</file>
+        <file>image_database/map.jpg</file>
         <file>photo/e.gif</file>
+        <file>photo/e.jpg</file>
         <file>photo/e.mp4</file>
         <file>photo/e1.jpg</file>
         <file>photo/e2.jpg</file>
+        <file>photo/lake1.jpg</file>
+        <file>photo/lake2.jpg</file>
     </qresource>
 </RCC>

@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 尝试查找图片文件
-    QString imagePath = ":/map.jpg";
+    QString imagePath = ":/image_database/map.jpg";
 
     // 创建主窗口
     NavigationWidget window(imagePath);
