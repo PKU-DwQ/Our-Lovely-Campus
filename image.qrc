@@ -10,5 +10,6 @@
         <file>photo/e2.jpg</file>
         <file>photo/lake1.jpg</file>
         <file>photo/lake2.jpg</file>
+        <file>image_database/cover.png</file>
     </qresource>
 </RCC>

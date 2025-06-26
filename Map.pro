@@ -12,13 +12,15 @@ SOURCES += \
     main.cpp \
     mapicon.cpp \
     movingicon.cpp \
-    navigationwidget.cpp
+    navigationwidget.cpp \
+    coverwidget.cpp
 
 HEADERS += \
     imageviewer.h \
     mapicon.h \
     movingicon.h \
-    navigationwidget.h
+    navigationwidget.h \
+    coverwidget.h
 
 FORMS += \
     movingicon.ui
@@ -30,7 +32,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     icon/1.jpg \
-    icon/2.jpg
+    icon/2.jpg \
+    image_database/cover.png
 
 RESOURCES += \
     image.qrc \
