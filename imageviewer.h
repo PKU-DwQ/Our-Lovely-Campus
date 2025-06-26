@@ -13,6 +13,7 @@
 #include "movingicon.h"
 
 class ImageViewer : public QWidget {
+    Q_OBJECT
 public:
     void focusInEvent(QFocusEvent* event) override;
     explicit ImageViewer(const QString& imagePath, QWidget* parent = nullptr);
@@ -24,7 +25,7 @@ public:
     void keyPressEvent(QKeyEvent* event) override;
     void setLakeIconPosition(int x, int y);
     void loadLakeIconImages(const QString& normalPath, const QString& hoverPath);
-    void setupMovingIcon(const QString& icon1Path, const QString& icon2Path, const QList<QPoint>& path);
+    void setupMovingIcon(const QString& iconFilePath, const int normalNum, const int clickNum, const QList<QPoint>& path);
 
 private:
     void createErrorImage();
@@ -33,6 +34,8 @@ private:
     MapIcon m_mapIcon;
     MapIcon m_lakeIcon;
     MovingIcon* m_movingIcon;
+    QTimer* m_switchTimer;
+    QTimer* m_moveTimer;
 };
 
 #endif // IMAGEVIEWER_H

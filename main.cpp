@@ -41,8 +41,8 @@ int main(int argc, char* argv[])
         // 创建导航窗口
         navigation = new NavigationWidget(imagePath);
         //navigation->setWindowTitle("图片导航查看器");
-        navigation->show();
-        //navigation->showMaximized();  // 全屏显示
+        //navigation->show();
+        navigation->showMaximized();  // 全屏显示
     });
 
     return app.exec();

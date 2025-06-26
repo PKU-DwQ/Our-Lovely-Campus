@@ -1,4 +1,5 @@
 #include "imageviewer.h"
+#include "movingicon.h"
 #include <QLabel>
 #include <QFont>
 
@@ -7,13 +8,28 @@ void ImageViewer::focusInEvent(QFocusEvent* event) {
     setFocus(); // 确保获得焦点
 }
 
-void ImageViewer::setupMovingIcon(const QString& icon1Path, const QString& icon2Path, const QList<QPoint>& path) {
-    m_movingIcon = new MovingIcon(icon1Path, icon2Path, 50, 50); // 切换间隔1秒，移动间隔50毫秒
+void ImageViewer::setupMovingIcon(const QString& iconFilePath, const int normalNum, const int clickNum, const QList<QPoint>& path) {
+    m_movingIcon = new MovingIcon(iconFilePath, normalNum, clickNum, 50, 50); // 切换间隔1秒，移动间隔50毫秒
     m_movingIcon->setPath(path);
+
+    // 初始化定时器
+    m_switchTimer = new QTimer(this);
+    m_moveTimer = new QTimer(this);
+
+    // 连接信号和槽
+    connect(m_switchTimer, &QTimer::timeout, this, [this]() {
+        this->update();  // 明确调用无参版本
+    });
+    connect(m_switchTimer, &QTimer::timeout, m_movingIcon, &MovingIcon::switchIcon);
+    connect(m_moveTimer, &QTimer::timeout, m_movingIcon, &MovingIcon::moveAlongPath);
+
+    // 启动定时器
+    m_switchTimer->start(50);
+    m_moveTimer->start(50);
 }
 
 ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
-    : QWidget(parent), m_offset(780, 1080) // 初始地点:未名湖畔
+    : QWidget(parent), m_offset(0, 0) // 初始地点:未名湖畔m_offset(780, 1080)
 {
     if (!m_background.load(imagePath)) {
         qDebug() << "无法加载图片:" << imagePath;
@@ -36,7 +52,7 @@ ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
     for (int j=200;j>100;j-=2){
         path<<QPoint(100,j);
     }
-    setupMovingIcon(":/photo/e1.jpg", ":/photo/e2.jpg", path);
+    setupMovingIcon("test", 9, 0, path);
 }
 
 
@@ -196,24 +212,24 @@ void ImageViewer::setLakeIconPosition(int x, int y) {
 
 void ImageViewer::loadLakeIconImages(const QString& normalPath, const QString& hoverPath) {
     // 尝试加载普通状态图片
-    if (!m_lakeIcon.m_icon1.load(normalPath)) {
+    if (!m_lakeIcon.m_icon[1].load(normalPath)) {
         qDebug() << "无法加载湖图标普通状态图片:" << normalPath;
         // 创建简单的默认图标
-        m_lakeIcon.m_icon1 = QPixmap(32, 32);
-        m_lakeIcon.m_icon1.fill(Qt::transparent);
-        QPainter painter(&m_lakeIcon.m_icon1);
+        m_lakeIcon.m_icon[1] = QPixmap(32, 32);
+        m_lakeIcon.m_icon[1].fill(Qt::transparent);
+        QPainter painter(&m_lakeIcon.m_icon[1]);
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setPen(QPen(Qt::blue, 2));
         painter.setBrush(QBrush(QColor(100, 200, 255, 180)));
         painter.drawEllipse(4, 4, 24, 24);
     }
     // 尝试加载悬停状态图片
-    if (!m_lakeIcon.m_icon2.load(hoverPath)) {
+    if (!m_lakeIcon.m_icon[2].load(hoverPath)) {
         qDebug() << "无法加载湖图标悬停状态图片:" << hoverPath;
         // 创建简单的默认图标
-        m_lakeIcon.m_icon2 = QPixmap(32, 32);
-        m_lakeIcon.m_icon2.fill(Qt::transparent);
-        QPainter painter(&m_lakeIcon.m_icon2);
+        m_lakeIcon.m_icon[2] = QPixmap(32, 32);
+        m_lakeIcon.m_icon[2].fill(Qt::transparent);
+        QPainter painter(&m_lakeIcon.m_icon[2]);
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setPen(QPen(Qt::red, 2));
         painter.setBrush(QBrush(QColor(255, 100, 100, 180)));
@@ -235,3 +251,5 @@ void ImageViewer::createErrorImage()
     painter.setFont(QFont("Arial", 24, QFont::Bold));
     painter.drawText(m_background.rect(), Qt::AlignCenter, "图片加载失败\n请检查文件路径");
 }
+
+

@@ -8,6 +8,7 @@
 #include "imageviewer.h"
 
 class NavigationWidget : public QWidget {
+    Q_OBJECT
 public:
     explicit NavigationWidget(const QString& imagePath, QWidget* parent = nullptr);
 

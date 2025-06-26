@@ -1,47 +1,33 @@
 #include "movingicon.h"
 
-MovingIcon::MovingIcon(const QString& icon1Path, const QString& icon2Path, int switchInterval, int moveInterval)
+MovingIcon::MovingIcon(const QString& iconFilePath,  const int normalNum, const int clickNum, int switchInterval, int moveInterval)
     : MapIcon(),
+    m_currentPathIndex(0),
     m_switchInterval(switchInterval),
-    m_moveInterval(moveInterval),
-    m_currentPathIndex(0)
+    m_moveInterval(moveInterval)
 {
     // 尝试加载图标
-    if (!m_icon1.load(icon1Path)) {
-        qDebug() << "无法加载图标:" << icon1Path;
-        createDefaultIcon1();
+    for (int i = 1; i <= normalNum; i++){
+        QString iconPath = ":/" + iconFilePath + "/" + QString::number(i) +".png";
+        if (!m_icon[i].load(iconPath)) {
+            qDebug() << "无法加载图标" << i;
+        }
     }
-    if (!m_icon2.load(icon2Path)) {
-        qDebug() << "无法加载图标:" << icon2Path;
-        createDefaultIcon2();
-    }
-
-    // 初始化定时器
-    m_switchTimer = new QTimer(this);
-    m_moveTimer = new QTimer(this);
-
-    // 连接信号和槽
-    connect(m_switchTimer, &QTimer::timeout, this, &MovingIcon::switchIcon);
-    connect(m_moveTimer, &QTimer::timeout, this, &MovingIcon::moveAlongPath);
-
-    // 启动定时器
-    m_switchTimer->start(m_switchInterval);
-    m_moveTimer->start(m_moveInterval);
     m_visible=true;
 }
 
-void MovingIcon::start() {
+void MovingIcon::start() {/*
     if (!m_switchTimer->isActive()) {
         m_switchTimer->start(m_switchInterval);
     }
     if (!m_moveTimer->isActive()) {
         m_moveTimer->start(m_moveInterval);
-    }
+    }*/
 }
 
-void MovingIcon::stop() {
+void MovingIcon::stop() {/*
     m_switchTimer->stop();
-    m_moveTimer->stop();
+    m_moveTimer->stop();*/
 }
 void MovingIcon::setPath(const QList<QPoint>& path) {
     m_path = path;
@@ -49,19 +35,19 @@ void MovingIcon::setPath(const QList<QPoint>& path) {
 }
 
 void MovingIcon::setSwitchInterval(int interval) {
-    m_switchInterval = interval;
+    m_switchInterval = interval;/*
     if (m_switchTimer->isActive()) {
         m_switchTimer->stop();
         m_switchTimer->start(m_switchInterval);
-    }
+    }*/
 }
 
 void MovingIcon::setMoveInterval(int interval) {
-    m_moveInterval = interval;
+    m_moveInterval = interval;/*
     if (m_moveTimer->isActive()) {
         m_moveTimer->stop();
         m_moveTimer->start(m_moveInterval);
-    }
+    }*/
 }
 
 void MovingIcon::switchIcon() {

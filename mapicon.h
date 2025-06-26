@@ -22,12 +22,7 @@ public:
     QRect boundingRect(const QPoint& offset) const;
     bool containsPoint(const QPoint& point, const QPoint& offset) const;
     void onClicked();
-
-    void createDefaultIcon1();
-    void createDefaultIcon2();
-
-    QPixmap m_icon1;
-    QPixmap m_icon2;
+    QPixmap m_icon[100];
     QPoint m_position;
     bool m_visible;
     bool m_isHovered;

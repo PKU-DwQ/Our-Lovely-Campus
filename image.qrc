@@ -11,5 +11,14 @@
         <file>photo/lake1.jpg</file>
         <file>photo/lake2.jpg</file>
         <file>image_database/cover.png</file>
+        <file>test/1.png</file>
+        <file>test/2.png</file>
+        <file>test/3.png</file>
+        <file>test/4.png</file>
+        <file>test/5.png</file>
+        <file>test/6.png</file>
+        <file>test/7.png</file>
+        <file>test/8.png</file>
+        <file>test/9.png</file>
     </qresource>
 </RCC>
