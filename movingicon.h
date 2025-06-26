@@ -9,7 +9,7 @@
 class MovingIcon : public MapIcon {
     Q_OBJECT // 确保包含 Q_OBJECT 宏
 public:
-    MovingIcon(const QString& icon1Path, const QString& icon2Path, int switchInterval = 1000, int moveInterval = 50);
+    MovingIcon(const QString& icon1Path, const QString& icon2Path, int switchInterval = 50, int moveInterval = 50);
 
     void start();
     void stop();

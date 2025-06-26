@@ -8,9 +8,8 @@ void ImageViewer::focusInEvent(QFocusEvent* event) {
 }
 
 void ImageViewer::setupMovingIcon(const QString& icon1Path, const QString& icon2Path, const QList<QPoint>& path) {
-    m_movingIcon = new MovingIcon(icon1Path, icon2Path, 1000, 50); // 切换间隔1秒，移动间隔50毫秒
+    m_movingIcon = new MovingIcon(icon1Path, icon2Path, 50, 50); // 切换间隔1秒，移动间隔50毫秒
     m_movingIcon->setPath(path);
-    m_movingIcon->start();
 }
 
 ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
@@ -26,7 +25,17 @@ ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
 
     // 设置移动图标
     QList<QPoint> path;
-    path << QPoint(100, 100) << QPoint(100, 200) << QPoint(200, 200) << QPoint(200, 100) << QPoint(100, 100);
+    for (int i=100;i<200;i=i+2){
+        path << QPoint(i, 100);}
+    for (int j=100;j<200;j+=2){
+        path<<QPoint(200,j);
+    }
+    for (int i=200;i>100;i-=2){
+        path<<QPoint(i,200);
+    }
+    for (int j=200;j>100;j-=2){
+        path<<QPoint(100,j);
+    }
     setupMovingIcon(":/photo/e1.jpg", ":/photo/e2.jpg", path);
 }
 
@@ -84,11 +93,9 @@ void ImageViewer::moveView(int dx, int dy)
         }
     }
     // 仅在有实际移动时更新
-    if (m_offset.x() != newX || m_offset.y() != newY) {
-        m_offset.setX(newX);
-        m_offset.setY(newY);
-        update(); // 触发重绘
-    }
+    m_offset.setX(newX);
+    m_offset.setY(newY);
+    update(); // 触发重绘
 }
 
 QPoint ImageViewer::getOffset() const {

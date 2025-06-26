@@ -23,19 +23,26 @@ MovingIcon::MovingIcon(const QString& icon1Path, const QString& icon2Path, int s
     // 连接信号和槽
     connect(m_switchTimer, &QTimer::timeout, this, &MovingIcon::switchIcon);
     connect(m_moveTimer, &QTimer::timeout, this, &MovingIcon::moveAlongPath);
+
+    // 启动定时器
+    m_switchTimer->start(m_switchInterval);
+    m_moveTimer->start(m_moveInterval);
     m_visible=true;
 }
 
 void MovingIcon::start() {
-    m_switchTimer->start(m_switchInterval);
-    m_moveTimer->start(m_moveInterval);
+    if (!m_switchTimer->isActive()) {
+        m_switchTimer->start(m_switchInterval);
+    }
+    if (!m_moveTimer->isActive()) {
+        m_moveTimer->start(m_moveInterval);
+    }
 }
 
 void MovingIcon::stop() {
     m_switchTimer->stop();
     m_moveTimer->stop();
 }
-
 void MovingIcon::setPath(const QList<QPoint>& path) {
     m_path = path;
     m_currentPathIndex = 0;
@@ -58,6 +65,7 @@ void MovingIcon::setMoveInterval(int interval) {
 }
 
 void MovingIcon::switchIcon() {
+    m_isHovered=!m_isHovered;
 }
 
 void MovingIcon::moveAlongPath() {
