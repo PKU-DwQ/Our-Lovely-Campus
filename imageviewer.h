@@ -23,12 +23,7 @@ public:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
-    void setLakeIconPosition(int x, int y);
-    void loadLakeIconImages(const QString& normalPath, const QString& hoverPath);
     void setupMovingIcon(const QString& iconFilePath, const int normalNum, const int clickNum, const QList<QPoint>& path);
-
-private:
-    void createErrorImage();
     QPixmap m_background;
     QPoint m_offset;
     MapIcon m_mapIcon;

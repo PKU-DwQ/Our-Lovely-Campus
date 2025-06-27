@@ -1,7 +1,7 @@
 #include "mapicon.h"
 
-MapIcon::MapIcon(const QString& iconFilePath,  const int normalNum, const int clickNum) :
-    m_visible(false), current_icon_index{}, iconFilePath(iconFilePath), normalNum(normalNum), clickNum(clickNum) {
+MapIcon::MapIcon(const QString& iconFilePath,  const int normalNum, const int clickNum, int iconsize) :
+    m_visible(false), current_icon_index{}, iconFilePath(iconFilePath), normalNum(normalNum), clickNum(clickNum), iconsize(iconsize) {
     // 尝试加载图标
     for (int i = 0; i < normalNum + clickNum; i++){
         QString iconPath = ":/" + iconFilePath + "/" + QString::number(i) +".png";
@@ -37,7 +37,7 @@ void MapIcon::draw(QPainter& painter, const QPoint& offset) {
     QPixmap currentIcon = m_icon[current_icon_index];
 
     // 定义目标大小（例如 64x64）
-    QSize targetSize(128, 128);
+    QSize targetSize(iconsize, iconsize);
     QPixmap scaledIcon = currentIcon.scaled(targetSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     // 绘制图标

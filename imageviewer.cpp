@@ -31,13 +31,10 @@ void ImageViewer::setupMovingIcon(const QString& iconFilePath, const int normalN
 ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
     : QWidget(parent), m_offset(0, 0), m_mapIcon() // 初始地点:未名湖畔m_offset(780, 1080)
 {
-    if (!m_background.load(imagePath)) {
-        qDebug() << "无法加载图片:" << imagePath;
-        createErrorImage();
-    }
+    m_background.load(imagePath);
     setMinimumSize(600, 300);
     setFocusPolicy(Qt::StrongFocus); // 允许接收键盘事件
-    setMouseTracking(true); // 默认不跟踪鼠标
+    setMouseTracking(true); // 默认不跟踪鼠标 设置为跟踪
 
     // 设置移动图标
     QList<QPoint> path;
@@ -125,13 +122,14 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
     }
 
     // 检查是否点击在图标上
-    if (m_mapIcon.containsPoint(event->pos(), m_offset)) {
+    if (m_movingIcon->containsPoint(event->pos(), m_offset)) {
+        qDebug() << "Mouse click pos:" << event->pos();
         QWidget* newWindow = new QWidget();
-        newWindow->setWindowTitle("新窗口");
-        newWindow->resize(400, 300);
+        newWindow->setWindowTitle("Turle");
+        newWindow->resize(800, 600);
 
         // 在新窗口中绘制内容
-        QLabel* label = new QLabel("这是新窗口的内容", newWindow);
+        QLabel* label = new QLabel("可爱的小乌龟", newWindow);
         label->setAlignment(Qt::AlignCenter);
         label->setFont(QFont("Arial", 16));
 
@@ -141,55 +139,22 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
         update();
         event->accept(); // 消耗事件，表示已处理
     }
-    // 检查是否点击在湖图标上
-    else if (m_lakeIcon.containsPoint(event->pos(), m_offset)) {
-        QWidget* newWindow = new QWidget();
-        newWindow->setWindowTitle("湖详情");
-        newWindow->resize(400, 300);
-
-        // 在新窗口中绘制内容
-        QLabel* label = new QLabel("这是湖的详情窗口", newWindow);
-        label->setAlignment(Qt::AlignCenter);
-        label->setFont(QFont("Arial", 16));
-
-        newWindow->show();
-
-        m_lakeIcon.onClicked();
-        update();
-        event->accept(); // 消耗事件，表示已处理
-    } // 检查是否点击在移动图标上
-    else if (m_movingIcon->containsPoint(event->pos(), m_offset)) {
-        QWidget* newWindow = new QWidget();
-        newWindow->setWindowTitle("移动图标详情");
-        newWindow->resize(400, 300);
-
-        QLabel* label = new QLabel("这是移动图标的详情窗口", newWindow);
-        label->setAlignment(Qt::AlignCenter);
-        label->setFont(QFont("Arial", 16));
-
-        newWindow->show();
-
-        m_movingIcon->onClicked();
-        update();
-        event->accept();
-    } else {
+    else {
         QWidget::mousePressEvent(event);
     }
 }
-
-void ImageViewer::mouseMoveEvent(QMouseEvent* event) {/*
-    QWidget::mouseMoveEvent(event);
-    bool isHoveredMap = m_mapIcon.containsPoint(event->pos(), m_offset);
-    bool isHoveredLake = m_lakeIcon.containsPoint(event->pos(), m_offset);
-
-    if (isHoveredMap != m_mapIcon.isHovered()) {
-        m_mapIcon.setIsHovered(isHoveredMap);
+void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
+    qDebug() << "Mouse move pos:" << event->pos();  // 假设是 QGraphicsItem
+    if (m_movingIcon->containsPoint(event->pos(), m_offset)) {
+        qDebug() << "Hovering over icon";
+        m_movingIcon->setVisible(false);
         update();
+        event->accept(); // 消耗事件，表示已处理
     }
-    if (isHoveredLake != m_lakeIcon.isHovered()) {
-        m_lakeIcon.setIsHovered(isHoveredLake);
-        update();
-    }*/
+    else{
+        m_movingIcon->setVisible(true);
+        event->accept();
+    }
 }
 
 void ImageViewer::keyPressEvent(QKeyEvent* event) {
@@ -220,51 +185,5 @@ void ImageViewer::keyPressEvent(QKeyEvent* event) {
     }
 }
 
-void ImageViewer::setLakeIconPosition(int x, int y) {
-    m_lakeIcon.setPosition(x, y);
-    m_lakeIcon.setVisible(true);
-}
-
-void ImageViewer::loadLakeIconImages(const QString& normalPath, const QString& hoverPath) {
-    // 尝试加载普通状态图片
-    if (!m_lakeIcon.m_icon[1].load(normalPath)) {
-        qDebug() << "无法加载湖图标普通状态图片:" << normalPath;
-        // 创建简单的默认图标
-        m_lakeIcon.m_icon[1] = QPixmap(32, 32);
-        m_lakeIcon.m_icon[1].fill(Qt::transparent);
-        QPainter painter(&m_lakeIcon.m_icon[1]);
-        painter.setRenderHint(QPainter::Antialiasing);
-        painter.setPen(QPen(Qt::blue, 2));
-        painter.setBrush(QBrush(QColor(100, 200, 255, 180)));
-        painter.drawEllipse(4, 4, 24, 24);
-    }
-    // 尝试加载悬停状态图片
-    if (!m_lakeIcon.m_icon[2].load(hoverPath)) {
-        qDebug() << "无法加载湖图标悬停状态图片:" << hoverPath;
-        // 创建简单的默认图标
-        m_lakeIcon.m_icon[2] = QPixmap(32, 32);
-        m_lakeIcon.m_icon[2].fill(Qt::transparent);
-        QPainter painter(&m_lakeIcon.m_icon[2]);
-        painter.setRenderHint(QPainter::Antialiasing);
-        painter.setPen(QPen(Qt::red, 2));
-        painter.setBrush(QBrush(QColor(255, 100, 100, 180)));
-        painter.drawRect(4, 4, 24, 24);
-    }
-}
-
-void ImageViewer::createErrorImage()
-{
-    m_background = QPixmap(400, 300);
-    m_background.fill(QColor(80, 20, 30));  // 深红色背景
-    QPainter painter(&m_background);
-    painter.setRenderHint(QPainter::Antialiasing);
-    // 画一个黄色叉叉
-    painter.setPen(QPen(Qt::yellow, 8));
-    painter.drawLine(50, 50, 350, 250);
-    painter.drawLine(350, 50, 50, 250);
-    // 添加错误文本
-    painter.setFont(QFont("Arial", 24, QFont::Bold));
-    painter.drawText(m_background.rect(), Qt::AlignCenter, "图片加载失败\n请检查文件路径");
-}
 
 

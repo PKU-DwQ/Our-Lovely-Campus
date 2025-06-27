@@ -11,7 +11,7 @@
 class MapIcon  : public QObject{
     Q_OBJECT
 public:
-    MapIcon(const QString& iconFilePath = "test",  const int normalNum = 20, const int clickNum = 0);
+    MapIcon(const QString& iconFilePath = "test",  const int normalNum = 20, const int clickNum = 0, int iconsize = 80);
     void setPosition(int x, int y);
     void toggleVisibility();
     void setVisible(bool visible);
@@ -25,6 +25,7 @@ public:
     QPoint m_position;
     bool m_visible;
     int current_icon_index;
+    int iconsize;
     const QString& iconFilePath;
     const int normalNum;
     const int clickNum;

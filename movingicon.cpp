@@ -5,9 +5,7 @@ MovingIcon::MovingIcon(const QString& iconFilePath,  const int normalNum, const 
     m_currentPathIndex(0),
     m_switchInterval(switchInterval),
     m_moveInterval(moveInterval)
-{
-
-}
+{}
 
 void MovingIcon::start() {/*
     if (!m_switchTimer->isActive()) {
@@ -18,9 +16,8 @@ void MovingIcon::start() {/*
     }*/
 }
 
-void MovingIcon::stop() {/*
-    m_switchTimer->stop();
-    m_moveTimer->stop();*/
+void MovingIcon::stop() {
+
 }
 void MovingIcon::setPath(const QList<QPoint>& path) {
     m_path = path;
@@ -43,9 +40,6 @@ void MovingIcon::setMoveInterval(int interval) {
     }*/
 }
 
-void MovingIcon::switchIcon() {
-    current_icon_index = (current_icon_index + 1) % normalNum;
-}
 
 void MovingIcon::moveAlongPath() {
     if (m_path.isEmpty()) return;

@@ -21,10 +21,6 @@ NavigationWidget::NavigationWidget(const QString& imagePath, QWidget* parent)
     setStyleSheet("background-color: #35363f;");
     resize(1000, 500);
     m_imageViewer->setFocus();
-
-    // 设置湖图标位置和图片
-    m_imageViewer->setLakeIconPosition(1690, 1300);
-    m_imageViewer->loadLakeIconImages(":/photo/lake1.jpg", ":/photo/lake2.jpg");
 }
 
 void NavigationWidget::createNavigationButtons()
