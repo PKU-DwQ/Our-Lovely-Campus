@@ -31,5 +31,16 @@
         <file>test/18.png</file>
         <file>test/19.png</file>
         <file>test/0.png</file>
+        <file>test/20.png</file>
+        <file>test/21.png</file>
+        <file>test/22.png</file>
+        <file>test/23.png</file>
+        <file>test/24.png</file>
+        <file>test/25.png</file>
+        <file>test/26.png</file>
+        <file>test/27.png</file>
+        <file>test/28.png</file>
+        <file>test/29.png</file>
+        <file>test/30.png</file>
     </qresource>
 </RCC>

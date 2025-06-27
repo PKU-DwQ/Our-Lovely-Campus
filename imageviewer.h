@@ -23,12 +23,12 @@ public:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
-    void setupMovingIcon(const QString& iconFilePath, const int normalNum, const int clickNum, const QList<QPoint>& path);
+    void setupMovingIcon();
     QPixmap m_background;
     QPoint m_offset;
     MapIcon m_mapIcon;
     MapIcon m_lakeIcon;
-    MovingIcon* m_movingIcon;
+    MovingIcon* turtle;
     QTimer* m_switchTimer;
     QTimer* m_moveTimer;
 };

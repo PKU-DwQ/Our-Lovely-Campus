@@ -8,9 +8,8 @@ void ImageViewer::focusInEvent(QFocusEvent* event) {
     setFocus(); // 确保获得焦点
 }
 
-void ImageViewer::setupMovingIcon(const QString& iconFilePath, const int normalNum, const int clickNum, const QList<QPoint>& path) {
-    m_movingIcon = new MovingIcon(iconFilePath, normalNum, clickNum, 50, 50); // 切换间隔1秒，移动间隔50毫秒
-    m_movingIcon->setPath(path);
+void ImageViewer::setupMovingIcon() {
+    turtle = new MovingIcon("test", 20, 11, 100, 50, 50); // 切换间隔1秒，移动间隔50毫秒
 
     // 初始化定时器
     m_switchTimer = new QTimer(this);
@@ -20,36 +19,23 @@ void ImageViewer::setupMovingIcon(const QString& iconFilePath, const int normalN
     connect(m_switchTimer, &QTimer::timeout, this, [this]() {
         this->update();  // 明确调用无参版本
     });
-    connect(m_switchTimer, &QTimer::timeout, m_movingIcon, &MovingIcon::switchIcon);
-    connect(m_moveTimer, &QTimer::timeout, m_movingIcon, &MovingIcon::moveAlongPath);
+    connect(m_switchTimer, &QTimer::timeout, turtle, &MovingIcon::switchIcon);
+    connect(m_moveTimer, &QTimer::timeout, turtle, &MovingIcon::moveAlongPath);
 
     // 启动定时器
     m_switchTimer->start(50);
     m_moveTimer->start(50);
+
 }
 
 ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
-    : QWidget(parent), m_offset(0, 0), m_mapIcon() // 初始地点:未名湖畔m_offset(780, 1080)
+    : QWidget(parent), m_offset(600, 700), m_mapIcon() // 初始地点:未名湖畔m_offset(780, 1080)
 {
     m_background.load(imagePath);
     setMinimumSize(600, 300);
     setFocusPolicy(Qt::StrongFocus); // 允许接收键盘事件
     setMouseTracking(true); // 默认不跟踪鼠标 设置为跟踪
-
-    // 设置移动图标
-    QList<QPoint> path;
-    for (int i=800;i<900;i=i+2){
-        path << QPoint(i, 800);}
-    for (int j=800;j<900;j+=2){
-        path<<QPoint(900,j);
-    }
-    for (int i=900;i>800;i-=2){
-        path<<QPoint(i,900);
-    }
-    for (int j=900;j>800;j-=2){
-        path<<QPoint(800,j);
-    }
-    setupMovingIcon("test", 20, 0, path);
+    setupMovingIcon(); //这里修改参数
 }
 
 
@@ -59,27 +45,21 @@ void ImageViewer::paintEvent(QPaintEvent* event)
     QPainter painter(this);
     // 绘制背景
     painter.fillRect(rect(), QColor(50,50,60));
-    if (!m_background.isNull()) {
-        // 计算实际显示区域
-        int drawWidth = qMin(width(), m_background.width());
-        int drawHeight = qMin(height(), m_background.height());
-        painter.drawPixmap(0, 0, drawWidth, drawHeight, m_background,
-                           m_offset.x(), m_offset.y(), drawWidth, drawHeight);
-    }
-    else {
-        painter.setPen(Qt::red);
-        painter.setFont(QFont("Arial", 16));
-        painter.drawText(rect(), Qt::AlignCenter, "图片加载失败");
-    }
+    // 计算实际显示区域
+    int drawWidth = qMin(width(), m_background.width());
+    int drawHeight = qMin(height(), m_background.height());
+    painter.drawPixmap(0, 0, drawWidth, drawHeight, m_background,
+                       m_offset.x(), m_offset.y(), drawWidth, drawHeight);
+
     // 绘制地图图标
     m_mapIcon.draw(painter, m_offset);
-    // 绘制新的湖图标
-    m_lakeIcon.draw(painter, m_offset);
     // 绘制信息栏
     // 绘制移动图标
-    if (m_movingIcon) {
-        m_movingIcon->draw(painter, m_offset);
+    if (turtle) {
+        turtle->draw(painter, m_offset);
     }
+
+
     painter.fillRect(0, 0, width(), 30, QColor(0, 0, 0, 150));
     painter.setPen(Qt::white);
     painter.setFont(QFont("Arial", 10));
@@ -122,8 +102,8 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
     }
 
     // 检查是否点击在图标上
-    if (m_movingIcon->containsPoint(event->pos(), m_offset)) {
-        qDebug() << "Mouse click pos:" << event->pos();
+    if (turtle->containsPoint(event->pos(), m_offset)) {
+        //qDebug() << "Mouse click pos:" << event->pos();
         QWidget* newWindow = new QWidget();
         newWindow->setWindowTitle("Turle");
         newWindow->resize(800, 600);
@@ -144,15 +124,15 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
     }
 }
 void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
-    qDebug() << "Mouse move pos:" << event->pos();  // 假设是 QGraphicsItem
-    if (m_movingIcon->containsPoint(event->pos(), m_offset)) {
+    //qDebug() << "Mouse move pos:" << event->pos();  // 假设是 QGraphicsItem
+    if (turtle->containsPoint(event->pos(), m_offset)) {
         qDebug() << "Hovering over icon";
-        m_movingIcon->setVisible(false);
+        turtle->setNormal(false);
         update();
         event->accept(); // 消耗事件，表示已处理
     }
     else{
-        m_movingIcon->setVisible(true);
+        turtle->setNormal(true);
         event->accept();
     }
 }

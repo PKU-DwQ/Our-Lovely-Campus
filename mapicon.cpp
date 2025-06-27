@@ -1,12 +1,16 @@
 #include "mapicon.h"
 
 MapIcon::MapIcon(const QString& iconFilePath,  const int normalNum, const int clickNum, int iconsize) :
-    m_visible(false), current_icon_index{}, iconFilePath(iconFilePath), normalNum(normalNum), clickNum(clickNum), iconsize(iconsize) {
+    m_visible(false), current_icon_index{}, iconsize(iconsize), iconFilePath(iconFilePath), normalNum(normalNum), clickNum(clickNum),
+    maxIndx(clickNum + normalNum - 1), isnormal(false){
     // 尝试加载图标
     for (int i = 0; i < normalNum + clickNum; i++){
         QString iconPath = ":/" + iconFilePath + "/" + QString::number(i) +".png";
         if (!m_icon[i].load(iconPath)) {
-            qDebug() << "无法加载图标" << i;
+            qDebug() << "can't load icon" << i;
+        }
+        else{
+            qDebug() << "successfully load icon" << i;
         }
     }
     m_visible=true;
@@ -18,6 +22,10 @@ void MapIcon::setPosition(int x, int y) {
 
 void MapIcon::toggleVisibility() {
     m_visible = !m_visible;
+}
+
+void MapIcon::setNormal(bool normal) {
+    isnormal = normal;
 }
 
 void MapIcon::setVisible(bool visible) {
@@ -67,5 +75,17 @@ void MapIcon::onClicked() {
 }
 
 void MapIcon::switchIcon() {
-    current_icon_index = (current_icon_index + 1) % normalNum;
+    if (isnormal){
+        if (current_icon_index > normalNum) {
+            current_icon_index--;
+        }
+        else {
+            current_icon_index = (current_icon_index + 1) % normalNum;
+        }
+
+    }
+    else {
+        current_icon_index = maxIndx > (current_icon_index + 1) ? current_icon_index + 1 : maxIndx;
+    }
+
 }
