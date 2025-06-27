@@ -1,6 +1,7 @@
 #include "mapicon.h"
 
-MapIcon::MapIcon() : m_visible(false), m_isHovered(false) {
+MapIcon::MapIcon(const QString& iconFilePath,  const int normalNum, const int clickNum) :
+    m_visible(false), current_icon_index{}, iconFilePath(iconFilePath), normalNum(normalNum), clickNum(clickNum) {
     // 尝试加载默认图标
     if (!m_icon[1].load(":/test/1.jpg")) {
         qDebug() << "无法加载图标1.jpg";
@@ -27,20 +28,13 @@ bool MapIcon::isVisible() const {
     return m_visible;
 }
 
-void MapIcon::setIsHovered(bool isHovered) {
-    m_isHovered = isHovered;
-}
-
-bool MapIcon::isHovered() const {
-    return m_isHovered;
-}
 
 void MapIcon::draw(QPainter& painter, const QPoint& offset) {
     if (!m_visible) return;
 
     int iconX = m_position.x() - offset.x();
     int iconY = m_position.y() - offset.y();
-    QPixmap currentIcon = !m_isHovered ? m_icon[1] : m_icon[2];
+    QPixmap currentIcon = m_icon[current_icon_index];
 
     // 定义目标大小（例如 64x64）
     QSize targetSize(128, 128);

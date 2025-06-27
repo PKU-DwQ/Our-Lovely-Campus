@@ -1,7 +1,7 @@
 #include "movingicon.h"
 
 MovingIcon::MovingIcon(const QString& iconFilePath,  const int normalNum, const int clickNum, int switchInterval, int moveInterval)
-    : MapIcon(),
+    : MapIcon(iconFilePath, normalNum, clickNum),
     m_currentPathIndex(0),
     m_switchInterval(switchInterval),
     m_moveInterval(moveInterval)
@@ -51,7 +51,7 @@ void MovingIcon::setMoveInterval(int interval) {
 }
 
 void MovingIcon::switchIcon() {
-    m_isHovered=!m_isHovered;
+    current_icon_index = current_icon_index % normalNum + 1;
 }
 
 void MovingIcon::moveAlongPath() {

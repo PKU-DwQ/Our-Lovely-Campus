@@ -29,7 +29,7 @@ void ImageViewer::setupMovingIcon(const QString& iconFilePath, const int normalN
 }
 
 ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
-    : QWidget(parent), m_offset(0, 0) // 初始地点:未名湖畔m_offset(780, 1080)
+    : QWidget(parent), m_offset(0, 0), m_mapIcon() // 初始地点:未名湖畔m_offset(780, 1080)
 {
     if (!m_background.load(imagePath)) {
         qDebug() << "无法加载图片:" << imagePath;
@@ -41,18 +41,18 @@ ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
 
     // 设置移动图标
     QList<QPoint> path;
-    for (int i=100;i<200;i=i+2){
-        path << QPoint(i, 100);}
-    for (int j=100;j<200;j+=2){
-        path<<QPoint(200,j);
+    for (int i=800;i<900;i=i+2){
+        path << QPoint(i, 800);}
+    for (int j=800;j<900;j+=2){
+        path<<QPoint(900,j);
     }
-    for (int i=200;i>100;i-=2){
-        path<<QPoint(i,200);
+    for (int i=900;i>800;i-=2){
+        path<<QPoint(i,900);
     }
-    for (int j=200;j>100;j-=2){
-        path<<QPoint(100,j);
+    for (int j=900;j>800;j-=2){
+        path<<QPoint(800,j);
     }
-    setupMovingIcon("test", 9, 0, path);
+    setupMovingIcon("test", 20, 0, path);
 }
 
 
@@ -162,7 +162,7 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
     }
 }
 
-void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
+void ImageViewer::mouseMoveEvent(QMouseEvent* event) {/*
     QWidget::mouseMoveEvent(event);
     bool isHoveredMap = m_mapIcon.containsPoint(event->pos(), m_offset);
     bool isHoveredLake = m_lakeIcon.containsPoint(event->pos(), m_offset);
@@ -174,7 +174,7 @@ void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
     if (isHoveredLake != m_lakeIcon.isHovered()) {
         m_lakeIcon.setIsHovered(isHoveredLake);
         update();
-    }
+    }*/
 }
 
 void ImageViewer::keyPressEvent(QKeyEvent* event) {
