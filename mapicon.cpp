@@ -2,14 +2,14 @@
 
 MapIcon::MapIcon(const QString& iconFilePath,  const int normalNum, const int clickNum) :
     m_visible(false), current_icon_index{}, iconFilePath(iconFilePath), normalNum(normalNum), clickNum(clickNum) {
-    // 尝试加载默认图标
-    if (!m_icon[1].load(":/test/1.jpg")) {
-        qDebug() << "无法加载图标1.jpg";
+    // 尝试加载图标
+    for (int i = 0; i < normalNum + clickNum; i++){
+        QString iconPath = ":/" + iconFilePath + "/" + QString::number(i) +".png";
+        if (!m_icon[i].load(iconPath)) {
+            qDebug() << "无法加载图标" << i;
+        }
     }
-    // 尝试加载新图标
-    if (!m_icon[2].load(":/icon/2.jpg")) {
-        qDebug() << "无法加载图标2.jpg";
-    }
+    m_visible=true;
 }
 
 void MapIcon::setPosition(int x, int y) {
@@ -63,6 +63,9 @@ bool MapIcon::containsPoint(const QPoint& point, const QPoint& offset) const {
 }
 
 void MapIcon::onClicked() {
-    qDebug() << "图标被点击了";
+    qDebug() << "Icon clicked";
 }
 
+void MapIcon::switchIcon() {
+    current_icon_index = (current_icon_index + 1) % normalNum;
+}

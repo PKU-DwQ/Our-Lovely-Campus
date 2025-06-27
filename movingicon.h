@@ -16,7 +16,6 @@ public:
     void setPath(const QList<QPoint>& path);
     void setSwitchInterval(int interval);
     void setMoveInterval(int interval);
-    void switchIcon();
     void moveAlongPath();
     QList<QPoint> m_path;
     int m_currentPathIndex;

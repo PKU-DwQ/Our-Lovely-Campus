@@ -4,14 +4,13 @@
 //#include "imageviewer.h"
 #include "navigationwidget.h"
 #include "coverwidget.h"
-#include "foganimationwidget.h"  // 添加云雾动画头文件
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
     // 1. 创建封面窗口
     CoverWidget cover;
-    cover.setWindowTitle("北大校园 - 图片导航");
+    cover.setWindowTitle("北大校园");
     cover.resize(800, 600);
     cover.show();
 

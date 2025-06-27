@@ -6,14 +6,7 @@ MovingIcon::MovingIcon(const QString& iconFilePath,  const int normalNum, const 
     m_switchInterval(switchInterval),
     m_moveInterval(moveInterval)
 {
-    // 尝试加载图标
-    for (int i = 1; i <= normalNum; i++){
-        QString iconPath = ":/" + iconFilePath + "/" + QString::number(i) +".png";
-        if (!m_icon[i].load(iconPath)) {
-            qDebug() << "无法加载图标" << i;
-        }
-    }
-    m_visible=true;
+
 }
 
 void MovingIcon::start() {/*
@@ -51,7 +44,7 @@ void MovingIcon::setMoveInterval(int interval) {
 }
 
 void MovingIcon::switchIcon() {
-    current_icon_index = current_icon_index % normalNum + 1;
+    current_icon_index = (current_icon_index + 1) % normalNum;
 }
 
 void MovingIcon::moveAlongPath() {

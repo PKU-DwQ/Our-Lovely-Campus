@@ -18,7 +18,6 @@ SOURCES += \
 
 HEADERS += \
     foganimationwidget.h \
-    foganimationwidget.hmationwidget.h \
     imageviewer.h \
     mapicon.h \
     movingicon.h \
@@ -36,7 +35,27 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     icon/1.jpg \
     icon/2.jpg \
-    image_database/cover.png
+    image_database/cover.png \
+    test/0.png \
+    test/1.png \
+    test/10.png \
+    test/11.png \
+    test/12.png \
+    test/13.png \
+    test/14.png \
+    test/15.png \
+    test/16.png \
+    test/17.png \
+    test/18.png \
+    test/19.png \
+    test/2.png \
+    test/3.png \
+    test/4.png \
+    test/5.png \
+    test/6.png \
+    test/7.png \
+    test/8.png \
+    test/9.png
 
 RESOURCES += \
     image.qrc

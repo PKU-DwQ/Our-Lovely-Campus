@@ -20,6 +20,7 @@ public:
     QRect boundingRect(const QPoint& offset) const;
     bool containsPoint(const QPoint& point, const QPoint& offset) const;
     void onClicked();
+    void switchIcon();
     QPixmap m_icon[100];
     QPoint m_position;
     bool m_visible;

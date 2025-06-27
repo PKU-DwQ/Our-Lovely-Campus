@@ -30,6 +30,6 @@
         <file>test/17.png</file>
         <file>test/18.png</file>
         <file>test/19.png</file>
-        <file>test/20.png</file>
+        <file>test/0.png</file>
     </qresource>
 </RCC>
