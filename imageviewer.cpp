@@ -157,8 +157,23 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
         m_lakeIcon.onClicked();
         update();
         event->accept(); // 消耗事件，表示已处理
+    } // 检查是否点击在移动图标上
+    else if (m_movingIcon->containsPoint(event->pos(), m_offset)) {
+        QWidget* newWindow = new QWidget();
+        newWindow->setWindowTitle("移动图标详情");
+        newWindow->resize(400, 300);
+
+        QLabel* label = new QLabel("这是移动图标的详情窗口", newWindow);
+        label->setAlignment(Qt::AlignCenter);
+        label->setFont(QFont("Arial", 16));
+
+        newWindow->show();
+
+        m_movingIcon->onClicked();
+        update();
+        event->accept();
     } else {
-        QWidget::mousePressEvent(event); // 传递事件给父类
+        QWidget::mousePressEvent(event);
     }
 }
 
