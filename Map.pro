@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -8,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    chatdialog.cpp \
     foganimationwidget.cpp \
     imageviewer.cpp \
     main.cpp \
@@ -17,6 +19,7 @@ SOURCES += \
     coverwidget.cpp
 
 HEADERS += \
+    chatdialog.h \
     foganimationwidget.h \
     imageviewer.h \
     mapicon.h \
@@ -25,6 +28,7 @@ HEADERS += \
     coverwidget.h
 
 FORMS += \
+    chatdialog.ui \
     movingicon.ui
 
 # Default rules for deployment.

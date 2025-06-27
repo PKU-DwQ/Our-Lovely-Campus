@@ -1,5 +1,6 @@
 #include "imageviewer.h"
 #include "movingicon.h"
+#include"chatdialog.h"
 #include <QLabel>
 #include <QFont>
 
@@ -104,16 +105,9 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
     // 检查是否点击在图标上
     if (turtle->containsPoint(event->pos(), m_offset)) {
         //qDebug() << "Mouse click pos:" << event->pos();
-        QWidget* newWindow = new QWidget();
-        newWindow->setWindowTitle("Turle");
-        newWindow->resize(800, 600);
-
-        // 在新窗口中绘制内容
-        QLabel* label = new QLabel("可爱的小乌龟", newWindow);
-        label->setAlignment(Qt::AlignCenter);
-        label->setFont(QFont("Arial", 16));
-
-        newWindow->show();
+        ChatDialog *chatDialog = new ChatDialog(this);
+        chatDialog->setAttribute(Qt::WA_DeleteOnClose);
+        chatDialog->show();
 
         m_mapIcon.onClicked();
         update();
