@@ -1,9 +1,10 @@
 #include <QApplication>
 #include <QWidget>
-#include "mapicon.h"
-#include "imageviewer.h"
+//#include "mapicon.h"
+//#include "imageviewer.h"
 #include "navigationwidget.h"
 #include "coverwidget.h"
+#include "foganimationwidget.h"  // 添加云雾动画头文件
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);

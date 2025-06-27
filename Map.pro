@@ -8,6 +8,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    foganimationwidget.cpp \
     imageviewer.cpp \
     main.cpp \
     mapicon.cpp \
@@ -16,6 +17,8 @@ SOURCES += \
     coverwidget.cpp
 
 HEADERS += \
+    foganimationwidget.h \
+    foganimationwidget.hmationwidget.h \
     imageviewer.h \
     mapicon.h \
     movingicon.h \
@@ -36,5 +39,4 @@ DISTFILES += \
     image_database/cover.png
 
 RESOURCES += \
-    image.qrc \
-    map.qrc
+    image.qrc
