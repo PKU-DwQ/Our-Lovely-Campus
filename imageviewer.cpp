@@ -1,7 +1,6 @@
 #include "imageviewer.h"
 #include "movingicon.h"
 #include"chatdialog.h"
-#include <QLabel>
 #include <QFont>
 
 void ImageViewer::focusInEvent(QFocusEvent* event) {
@@ -105,7 +104,9 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
     // 检查是否点击在图标上
     if (turtle->containsPoint(event->pos(), m_offset)) {
         //qDebug() << "Mouse click pos:" << event->pos();
-        ChatDialog *chatDialog = new ChatDialog(this);
+        ChatDialog *chatDialog = new ChatDialog(":/test/1.png",
+                                                "这是pku一只可爱的小乌龟,在未名湖里游啊游。",
+                                                this);
         chatDialog->setAttribute(Qt::WA_DeleteOnClose);
         chatDialog->show();
 

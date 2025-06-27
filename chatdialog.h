@@ -23,7 +23,7 @@
 class ChatDialog : public QDialog {
     Q_OBJECT
 public:
-    explicit ChatDialog(QWidget *parent = nullptr);
+    explicit ChatDialog(const QString& imagePath, const QString& infoText, QWidget *parent = nullptr);
     void addMessage(const QString &sender, const QString &message);
     void paintEvent(QPaintEvent *event);
 private slots:
@@ -31,6 +31,8 @@ private slots:
     void handleApiResponse(QNetworkReply *reply);
 
 private:
+    QString m_imagePath;
+    QString m_infoText;
     QLabel *headerLabel;
     QLabel *imageLabel;
     QTextEdit *chatHistory;

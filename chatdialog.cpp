@@ -2,7 +2,7 @@
 #include <QPainter>
 #include <QFont>
 
-ChatDialog::ChatDialog(QWidget *parent) : QDialog(parent) {
+ChatDialog::ChatDialog(const QString& imagePath, const QString& infoText, QWidget *parent) : QDialog(parent), m_imagePath(imagePath), m_infoText(infoText) {
     setWindowTitle("北大地图助手");
     resize(500, 600);
 
@@ -89,7 +89,7 @@ void ChatDialog::paintEvent(QPaintEvent *event) {
     painter.fillRect(QRect(10, 10, width() - 20, 130), Qt::white);
 
     // 2. 绘制图片 (20, 20) 位置，120x120大小
-    QPixmap pixmap(":/test/0.png");
+    QPixmap pixmap(m_imagePath);
     if (!pixmap.isNull()) {
         pixmap = pixmap.scaled(120, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         painter.drawPixmap(20, 20, pixmap);
@@ -116,7 +116,7 @@ void ChatDialog::paintEvent(QPaintEvent *event) {
     QString text = "这是pku一只可爱的小乌龟,在未名湖里游啊游。";
     painter.drawText(textRect.adjusted(10, 10, -10, -10),
                      Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap,
-                     text);
+                     m_infoText);
 }
 
 void ChatDialog::addMessage(const QString &sender, const QString &message) {
@@ -139,7 +139,7 @@ void ChatDialog::sendMessage() {
     // 准备API请求
     QNetworkRequest request(QUrl("https://api.deepseek.com/v1/chat/completions"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader("Authorization", "Bearer sk-38015e2c879e4d3396bd060bf02a7ce9"); // 替换为实际API密钥
+    request.setRawHeader("Authorization", "Bearer APIKeys"); // 替换为实际API密钥
 
     // 构建请求数据
     QJsonObject messageObject;
