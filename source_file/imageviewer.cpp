@@ -1,6 +1,6 @@
 #include "head_file/imageviewer.h"
 #include "head_file/movingicon.h"
-#include"head_file/chatdialog.h"
+#include "head_file/chatdialog.h"
 #include "head_file/pathgenerator.h"
 #include <QFont>
 #include <QThread>
@@ -131,6 +131,7 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
     else if (cat->containsPoint(event->pos(), m_offset)) {
         //qDebug() << "Mouse click pos:" << event->pos();
         ChatDialog *chatDialog = new ChatDialog(":/turtle/1.png",
+                                                1,
                                                 "这是pku一只可爱的小乌龟,在未名湖里游啊游。",
                                                 this);
         chatDialog->setAttribute(Qt::WA_DeleteOnClose);
