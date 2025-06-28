@@ -31,5 +31,8 @@
         <file>turtle/7.png</file>
         <file>turtle/8.png</file>
         <file>turtle/9.png</file>
+        <file>turtle/photo/1.jpg</file>
+        <file>turtle/photo/2.jpg</file>
+        <file>turtle/photo/3.jpg</file>
     </qresource>
 </RCC>

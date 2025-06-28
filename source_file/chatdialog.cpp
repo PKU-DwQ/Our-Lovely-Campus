@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include <QSpacerItem>
 
+
 ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText, QWidget *parent) :
     QDialog(parent), m_imagePath(imagePath), m_infoText(infoText),m_imagenum(num) {
     setWindowTitle("北大地图助手");
@@ -104,9 +105,12 @@ ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText
     // 将导航控件添加到布局 (左箭头 - 图片 - 右箭头)
     navLayout->addWidget(m_prevButton);
 
-    // 创建图片标签 (图片将在paintEvent中绘制)
-    m_imageContainer = new QWidget(this);
-    m_imageContainer->setFixedSize(180, 180); // 增大图片区域
+    // 初始化当前图片索引
+    m_currentImageIndex = 0;
+
+    // 创建图片容器（使用自定义控件）
+    m_imageContainer = new ImageWidget(this);
+    m_imageContainer->setFixedSize(180, 180);
 
     navLayout->addWidget(m_imageContainer);
     navLayout->addWidget(m_nextButton);
@@ -163,39 +167,41 @@ ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText
 
     // 添加欢迎消息
     addMessage("北大小乌龟", "您好！我是pku一只可爱的小乌龟,在未名湖里游啊游");
+    loadCurrentImage();
 }
 
-void ChatDialog::paintEvent(QPaintEvent *event) {
-    QDialog::paintEvent(event);
+void ChatDialog::loadCurrentImage() {
+    // 构建图片目录路径
+    QDir imageDir(m_imagePath + "/photo");
 
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
+    // 获取所有支持的图片文件
+    QStringList imageFiles = imageDir.entryList(
+        QStringList() << "*.jpg" << "*.jpeg" << "*.png",
+        QDir::Files, QDir::Name
+        );
 
-    // 绘制图片区域
-    QRect imageRect = m_imageContainer->geometry();
-    imageRect.adjust(0, 0, -1, -1); // 调整边界
+    // 确保索引在有效范围内
+    if (m_currentImageIndex < 0) m_currentImageIndex = imageFiles.size() - 1;
+    if (m_currentImageIndex >= imageFiles.size()) m_currentImageIndex = 0;
 
-    // 绘制背景
-    painter.fillRect(imageRect, Qt::white);
+    if (!imageFiles.isEmpty() && m_currentImageIndex < imageFiles.size()) {
+        // 构建完整图片路径
+        QString imagePath = imageDir.filePath(imageFiles[m_currentImageIndex]);
+        QPixmap pixmap(imagePath);
 
-    // 绘制边框
-    painter.setPen(QPen(QColor(145, 213, 255), 1));
-    painter.drawRect(imageRect);
-    QString imagePath = QString("%1/%2.png").arg(m_imagePath).arg(m_currentImageIndex);
-    QPixmap pixmap(imagePath);
-    if (!pixmap.isNull()) {
-        pixmap = pixmap.scaled(150, 150, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        int x = imageRect.x() + (imageRect.width() - pixmap.width()) / 2;
-        int y = imageRect.y() + (imageRect.height() - pixmap.height()) / 2;
-        painter.drawPixmap(x, y, pixmap);
-    } else {
-        // 图片加载失败时绘制占位符
-        painter.setPen(Qt::white);
-        painter.drawRect(imageRect.x() + 15, imageRect.y() + 15, 150, 150);
-        painter.drawText(imageRect.adjusted(15, 15, -15, -15), Qt::AlignCenter, "图片加载失败");
-        qDebug() << "Mouse click pos:" ;
+        // 设置到图片控件
+        if (!pixmap.isNull()) {
+            m_imageContainer->setPixmap(pixmap);
+        } else {
+            // 清空图片显示
+            m_imageContainer->setPixmap(QPixmap());
+        }
     }
+
+    // 更新页码显示
+    updateImage();
 }
+
 
 void ChatDialog::updateImage() {
     // 更新页码标签

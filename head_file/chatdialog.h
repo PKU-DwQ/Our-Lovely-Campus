@@ -13,21 +13,18 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QScrollBar>
-#include <QTimer>
-#include <QApplication>
-#include <QStyle>
 #include <QLabel>
 #include <QFile>
-#include <QSizePolicy>
-#include <QMouseEvent>
+#include <QDir>
+#include <QPixmap>
+#include "head_file/imagewidget.h"
 
 class ChatDialog : public QDialog {
     Q_OBJECT
 public:
-    explicit ChatDialog(const QString& imagePath,int imagenum, const QString& infoText, QWidget *parent = nullptr);
+    explicit ChatDialog(const QString& imagePath, int imagenum, const QString& infoText, QWidget *parent = nullptr);
     void updateImage();
     void addMessage(const QString &sender, const QString &message);
-    void paintEvent(QPaintEvent *event) override;
 
 private slots:
     void sendMessage();
@@ -36,15 +33,17 @@ private slots:
     void nextImage();
 
 private:
+    void loadCurrentImage();
+
     QString m_imagePath;
     QString m_infoText;
-    int m_currentImageIndex = 0;
+    int m_currentImageIndex;
     int m_imagenum;
     QPushButton *m_prevButton;
     QPushButton *m_nextButton;
     QLabel *m_pageLabel;
     QLabel *m_infoLabel;
-    QWidget *m_imageContainer;  // 图片容器
+    ImageWidget *m_imageContainer;
     QTextEdit *chatHistory;
     QLineEdit *userInput;
     QPushButton *sendButton;

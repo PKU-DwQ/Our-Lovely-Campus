@@ -12,6 +12,7 @@ SOURCES += \
     source_file/chatdialog.cpp \
     source_file/imageviewer.cpp \
     main.cpp \
+    source_file/imagewidget.cpp \
     source_file/mapicon.cpp \
     source_file/movingicon.cpp \
     source_file/navigationwidget.cpp \
@@ -21,14 +22,16 @@ SOURCES += \
 HEADERS += \
     head_file/chatdialog.h \
     head_file/imageviewer.h \
+    head_file/imagewidget.h \
     head_file/mapicon.h \
     head_file/movingicon.h \
     head_file/navigationwidget.h \
     head_file/coverwidget.h  \
-    head_file/pathgenerator.h
+    head_file/pathgenerator.h \
 
 FORMS += \
     chatdialog.ui \
+    imagewidget.ui \
     movingicon.ui
 
 # Default rules for deployment.
