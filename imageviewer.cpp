@@ -9,7 +9,7 @@ void ImageViewer::focusInEvent(QFocusEvent* event) {
 }
 
 void ImageViewer::setupMovingIcon() {
-    turtle = new MovingIcon("test", 20, 11, 100, 50, 50); // 切换间隔1秒，移动间隔50毫秒
+    turtle = new MovingIcon("Icon_image/cat/normal", 20, 16, 100, 50, 50); // 切换间隔1秒，移动间隔50毫秒
 
     // 初始化定时器
     m_switchTimer = new QTimer(this);
@@ -29,7 +29,7 @@ void ImageViewer::setupMovingIcon() {
 }
 
 ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
-    : QWidget(parent), m_offset(600, 700), m_mapIcon() // 初始地点:未名湖畔m_offset(780, 1080)
+    : QWidget(parent), m_offset(600, 700) // 初始地点:未名湖畔m_offset(780, 1080)
 {
     m_background.load(imagePath);
     setMinimumSize(600, 300);
@@ -51,9 +51,7 @@ void ImageViewer::paintEvent(QPaintEvent* event)
     painter.drawPixmap(0, 0, drawWidth, drawHeight, m_background,
                        m_offset.x(), m_offset.y(), drawWidth, drawHeight);
 
-    // 绘制地图图标
-    m_mapIcon.draw(painter, m_offset);
-    // 绘制信息栏
+    // 绘制地图图标 信息栏
     // 绘制移动图标
     if (turtle) {
         turtle->draw(painter, m_offset);
@@ -96,11 +94,6 @@ QPoint ImageViewer::getOffset() const {
 }
 
 void ImageViewer::mousePressEvent(QMouseEvent* event) {
-    if (!m_mapIcon.isVisible() && !m_lakeIcon.isVisible()) {
-        QWidget::mousePressEvent(event); // 如果图标不可见，传递事件给父类
-        return;
-    }
-
     // 检查是否点击在图标上
     if (turtle->containsPoint(event->pos(), m_offset)) {
         //qDebug() << "Mouse click pos:" << event->pos();
@@ -114,8 +107,6 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
         label->setFont(QFont("Arial", 16));
 
         newWindow->show();
-
-        m_mapIcon.onClicked();
         update();
         event->accept(); // 消耗事件，表示已处理
     }
@@ -123,6 +114,7 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
         QWidget::mousePressEvent(event);
     }
 }
+
 void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
     //qDebug() << "Mouse move pos:" << event->pos();  // 假设是 QGraphicsItem
     if (turtle->containsPoint(event->pos(), m_offset)) {
@@ -144,10 +136,10 @@ void ImageViewer::keyPressEvent(QKeyEvent* event) {
         int centerY = m_offset.y() + height() / 2;
 
         // 设置图标位置
-        m_mapIcon.setPosition(centerX, centerY);
+        //m_mapIcon.setPosition(centerX, centerY);
 
         // 切换图标可见性
-        m_mapIcon.toggleVisibility();
+       // m_mapIcon.toggleVisibility();
 
         update(); // 重绘
     }

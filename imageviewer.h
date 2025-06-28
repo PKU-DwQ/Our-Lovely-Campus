@@ -26,8 +26,6 @@ public:
     void setupMovingIcon();
     QPixmap m_background;
     QPoint m_offset;
-    MapIcon m_mapIcon;
-    MapIcon m_lakeIcon;
     MovingIcon* turtle;
     QTimer* m_switchTimer;
     QTimer* m_moveTimer;
