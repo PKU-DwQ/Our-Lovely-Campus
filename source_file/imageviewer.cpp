@@ -119,7 +119,8 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
     // 检查是否点击在图标上
     if (turtle->containsPoint(event->pos(), m_offset)) {
         //qDebug() << "Mouse click pos:" << event->pos();
-        ChatDialog *chatDialog = new ChatDialog(":/turtle/1.png",
+        ChatDialog *chatDialog = new ChatDialog(":/turtle",
+                                                10,
                                                 "这是pku一只可爱的小乌龟,在未名湖里游啊游。",
                                                 this);
         chatDialog->setAttribute(Qt::WA_DeleteOnClose);
