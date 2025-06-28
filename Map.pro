@@ -115,5 +115,6 @@ DISTFILES += \
 
 RESOURCES += \
     basic_data.qrc \
+    cat.qrc \
     swan.qrc \
     turtle.qrc

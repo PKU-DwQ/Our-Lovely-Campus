@@ -6,7 +6,7 @@
 // 构造函数实现
 CoverWidget::CoverWidget(QWidget *parent) : QWidget(parent) {
     // 1. 加载封面图片
-    if (!coverImage.load(":/image_database/cover.png")) {  // 使用Qt资源系统（推荐）
+    if (!coverImage.load(":/image_database/cover.jpeg")) {  // 使用Qt资源系统（推荐）
         coverImage = QPixmap(800, 600);
         coverImage.fill(Qt::gray);
         QPainter painter(&coverImage);

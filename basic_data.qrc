@@ -1,7 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>image_database/map.jpg</file>
-        <file>image_database/cover.png</file>
         <file>config.json</file>
+        <file>image_database/cover.jpeg</file>
+        <file>image_database/cover_.png</file>
     </qresource>
 </RCC>

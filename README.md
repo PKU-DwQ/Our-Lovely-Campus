@@ -6,3 +6,8 @@
 #### `state_icon`
 
 #### `moving_icon`
+
+
+swan 0 - 20 normal 21 - 36 click
+turtle 0 - 20 normal
+cat 0 - 20 normal 21 - 36 click 

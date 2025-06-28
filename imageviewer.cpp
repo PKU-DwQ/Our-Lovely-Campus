@@ -9,7 +9,9 @@ void ImageViewer::focusInEvent(QFocusEvent* event) {
 }
 
 void ImageViewer::setupMovingIcon() {
-    turtle = new MovingIcon("swan", 20, 11, 100, 50, 50); // 切换间隔1秒，移动间隔50毫秒
+
+    //创建turtle活点
+    turtle = new MovingIcon("cat", 21, 16, 200, 50, 50); // 切换间隔1秒，移动间隔50毫秒
 
     // 初始化定时器
     m_switchTimer = new QTimer(this);
