@@ -5,7 +5,7 @@ MapIcon::MapIcon(QString iconFilePath,  const int normalNum, const int clickNum,
     maxIndx(clickNum + normalNum - 1), isnormal(true){ //isnormal初始化成立false 所以猫猫没动!
     // 尝试加载图标
     for (int i = 0; i < normalNum + clickNum; i++){
-        QString iconPath = ":/" + iconFilePath + "/" + QString::number(i) +".png";
+        QString iconPath = ":/icon/" + iconFilePath + "/" + QString::number(i) +".png";
         if (!m_icon[i].load(iconPath)) {
            qDebug() << iconFilePath << " can't load icon" << i;
         }

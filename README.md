@@ -10,7 +10,7 @@
     视旧事物时，那一瞬恍若初见的停顿。
 
 
-<img src="readme/2.jpg" alt="图片描述">
+<img src="setting/2.jpg" alt="图片描述">
 
 
 <br>
@@ -20,15 +20,19 @@
     但这一次，透过这张地图你关注到的,   
     并非是最熟悉的一切  
 <br><br>
-<img src="readme/1.jpg" alt="图片描述" width="50%">
+<img src="setting/1.jpg" alt="图片描述" width="60%">
 
 ### 项目结构
 
-- `./source/` 之下是所有的`.cpp`文件 (`main.cpp`除外)
+- `./source/` 所有的`.cpp`文件 (`main.cpp`除外)
 
-- `./head/` 之下是所有的`.h`文件 
+- `./head/` 所有的`.h`文件 
 
--`./<name>/` 之下是一个图标所需的全部内容
+- `./ui/` 所有的`.ui`文件 
+
+- `./rc/` 所有的`.qrc`资源文件 
+
+-`./rc/icon/<name>/` 名为`name`的图标所需的全部内容
 
 ### 动画实现
 
@@ -68,8 +72,8 @@ Icon 名称 *(即所属文件夹)* |    normal 图片编号 |      click 图片�
 swan               | 0 - 20             | 21 - 36 
 turtle             | 0 - 20             |
 cat                | 0 - 20             | 21 - 36 
-
-
+crane                | 0 - 19             | 20 - 69 
+gecko              | 0 - 19             | 20 - 69 
 ### 后记
 
 - 特别感谢通班`PhotonYan`授权使用他拍下的美丽校园

@@ -1,0 +1,42 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icon/cat/0.png</file>
+        <file>icon/cat/1.png</file>
+        <file>icon/cat/10.png</file>
+        <file>icon/cat/11.png</file>
+        <file>icon/cat/12.png</file>
+        <file>icon/cat/13.png</file>
+        <file>icon/cat/14.png</file>
+        <file>icon/cat/15.png</file>
+        <file>icon/cat/16.png</file>
+        <file>icon/cat/17.png</file>
+        <file>icon/cat/18.png</file>
+        <file>icon/cat/19.png</file>
+        <file>icon/cat/2.png</file>
+        <file>icon/cat/20.png</file>
+        <file>icon/cat/21.png</file>
+        <file>icon/cat/22.png</file>
+        <file>icon/cat/23.png</file>
+        <file>icon/cat/24.png</file>
+        <file>icon/cat/25.png</file>
+        <file>icon/cat/26.png</file>
+        <file>icon/cat/27.png</file>
+        <file>icon/cat/28.png</file>
+        <file>icon/cat/29.png</file>
+        <file>icon/cat/3.png</file>
+        <file>icon/cat/30.png</file>
+        <file>icon/cat/31.png</file>
+        <file>icon/cat/32.png</file>
+        <file>icon/cat/33.png</file>
+        <file>icon/cat/34.png</file>
+        <file>icon/cat/35.png</file>
+        <file>icon/cat/36.png</file>
+        <file>icon/cat/4.png</file>
+        <file>icon/cat/5.png</file>
+        <file>icon/cat/6.png</file>
+        <file>icon/cat/7.png</file>
+        <file>icon/cat/8.png</file>
+        <file>icon/cat/9.png</file>
+        <file>icon/cat/path.json</file>
+    </qresource>
+</RCC>

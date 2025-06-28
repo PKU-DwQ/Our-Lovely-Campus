@@ -30,9 +30,9 @@ HEADERS += \
     head_file/pathgenerator.h \
 
 FORMS += \
-    chatdialog.ui \
-    imagewidget.ui \
-    movingicon.ui
+    ui/chatdialog.ui \
+    ui/imagewidget.ui \
+    ui/movingicon.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -40,63 +40,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    Icon_image/cat/click/21.png \
-    Icon_image/cat/click/22.png \
-    Icon_image/cat/click/23.png \
-    Icon_image/cat/click/24.png \
-    Icon_image/cat/click/25.png \
-    Icon_image/cat/click/26.png \
-    Icon_image/cat/click/27.png \
-    Icon_image/cat/click/28.png \
-    Icon_image/cat/click/29.png \
-    Icon_image/cat/click/30.png \
-    Icon_image/cat/click/31.png \
-    Icon_image/cat/click/32.png \
-    Icon_image/cat/click/33.png \
-    Icon_image/cat/click/34.png \
-    Icon_image/cat/click/35.png \
-    Icon_image/cat/click/36.png \
-    Icon_image/cat/normal/1.png \
-    Icon_image/cat/normal/10.png \
-    Icon_image/cat/normal/11.png \
-    Icon_image/cat/normal/12.png \
-    Icon_image/cat/normal/13.png \
-    Icon_image/cat/normal/14.png \
-    Icon_image/cat/normal/15.png \
-    Icon_image/cat/normal/16.png \
-    Icon_image/cat/normal/17.png \
-    Icon_image/cat/normal/18.png \
-    Icon_image/cat/normal/19.png \
-    Icon_image/cat/normal/2.png \
-    Icon_image/cat/normal/20.png \
-    Icon_image/cat/normal/21.png \
-    Icon_image/cat/normal/22.png \
-    Icon_image/cat/normal/23.png \
-    Icon_image/cat/normal/24.png \
-    Icon_image/cat/normal/25.png \
-    Icon_image/cat/normal/26.png \
-    Icon_image/cat/normal/27.png \
-    Icon_image/cat/normal/28.png \
-    Icon_image/cat/normal/29.png \
-    Icon_image/cat/normal/3.png \
-    Icon_image/cat/normal/30.png \
-    Icon_image/cat/normal/31.png \
-    Icon_image/cat/normal/32.png \
-    Icon_image/cat/normal/33.png \
-    Icon_image/cat/normal/34.png \
-    Icon_image/cat/normal/35.png \
-    Icon_image/cat/normal/36.png \
-    Icon_image/cat/normal/4.png \
-    Icon_image/cat/normal/5.png \
-    Icon_image/cat/normal/6.png \
-    Icon_image/cat/normal/7.png \
-    Icon_image/cat/normal/8.png \
-    Icon_image/cat/normal/9.png \
+    config.json \
     image_database/cover.png \
 
 
 RESOURCES += \
-    basic_data.qrc \
-    cat.qrc \
-    swan.qrc \
-    turtle.qrc
+    rc/basic_data.qrc \
+    rc/cat.qrc \
+    rc/crane.qrc \
+    rc/gecko.qrc \
+    rc/swan.qrc \
+    rc/turtle.qrc

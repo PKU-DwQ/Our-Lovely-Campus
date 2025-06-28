@@ -1,0 +1,40 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icon/turtle/photo/1.jpg</file>
+        <file>icon/turtle/photo/2.jpg</file>
+        <file>icon/turtle/photo/3.jpg</file>
+        <file>icon/turtle/0.png</file>
+        <file>icon/turtle/1.png</file>
+        <file>icon/turtle/10.png</file>
+        <file>icon/turtle/11.png</file>
+        <file>icon/turtle/12.png</file>
+        <file>icon/turtle/13.png</file>
+        <file>icon/turtle/14.png</file>
+        <file>icon/turtle/15.png</file>
+        <file>icon/turtle/16.png</file>
+        <file>icon/turtle/17.png</file>
+        <file>icon/turtle/18.png</file>
+        <file>icon/turtle/19.png</file>
+        <file>icon/turtle/2.png</file>
+        <file>icon/turtle/20.png</file>
+        <file>icon/turtle/21.png</file>
+        <file>icon/turtle/22.png</file>
+        <file>icon/turtle/23.png</file>
+        <file>icon/turtle/24.png</file>
+        <file>icon/turtle/25.png</file>
+        <file>icon/turtle/26.png</file>
+        <file>icon/turtle/27.png</file>
+        <file>icon/turtle/28.png</file>
+        <file>icon/turtle/29.png</file>
+        <file>icon/turtle/3.png</file>
+        <file>icon/turtle/30.png</file>
+        <file>icon/turtle/4.png</file>
+        <file>icon/turtle/5.png</file>
+        <file>icon/turtle/6.png</file>
+        <file>icon/turtle/7.png</file>
+        <file>icon/turtle/8.png</file>
+        <file>icon/turtle/9.png</file>
+        <file>icon/turtle/path.json</file>
+        <file>icon/turtle/text.txt</file>
+    </qresource>
+</RCC>

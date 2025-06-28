@@ -14,7 +14,7 @@ MovingIcon::MovingIcon(const QString& iconFilePath,  const int normalNum, const 
     m_moveInterval(moveInterval)
 {
     qDebug() << "Loading icon:" << iconFilePath << "success";
-    QString configPath = ":/" + iconFilePath + "/path.json";
+    QString configPath = ":/icon/" + iconFilePath + "/path.json";
     QFile configFile(configPath);
     if (configFile.open(QIODevice::ReadOnly)) {
         QJsonDocument configDoc = QJsonDocument::fromJson(configFile.readAll());
