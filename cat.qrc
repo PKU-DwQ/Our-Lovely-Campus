@@ -37,5 +37,6 @@
         <file>cat/7.png</file>
         <file>cat/8.png</file>
         <file>cat/9.png</file>
+        <file>cat/path.json</file>
     </qresource>
 </RCC>

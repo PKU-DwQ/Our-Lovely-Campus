@@ -13,7 +13,7 @@ void ImageViewer::focusInEvent(QFocusEvent* event) {
 void ImageViewer::setupMovingIcon() {
 
     //创建turtle活点
-    turtle = new MovingIcon("turtle", 20, 11, 50, 50, 50); // 切换间隔1秒，移动间隔50毫秒
+    turtle = new MovingIcon("turtle", 20, 11, 80, 50, 50); // 切换间隔1秒，移动间隔50毫秒
     cat = new MovingIcon("cat", 20, 10, 200, 50, 50);
     // 初始化定时器
     m_switchTimer = new QTimer(this);
@@ -47,7 +47,7 @@ void ImageViewer::setupMovingIcon() {
 }
 
 ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
-    : QWidget(parent), m_offset(0, 0) // 初始地点:未名湖畔m_offset(780, 1080)
+    : QWidget(parent), m_offset(600, 700) // 初始地点:未名湖畔m_offset(780, 1080)
 {
     m_background.load(imagePath);
     setMinimumSize(1200, 1000);
@@ -127,6 +127,16 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
         update();
         event->accept(); // 消耗事件，表示已处理
     }
+    else if (cat->containsPoint(event->pos(), m_offset)) {
+        //qDebug() << "Mouse click pos:" << event->pos();
+        ChatDialog *chatDialog = new ChatDialog(":/turtle/1.png",
+                                                "这是pku一只可爱的小乌龟,在未名湖里游啊游。",
+                                                this);
+        chatDialog->setAttribute(Qt::WA_DeleteOnClose);
+        chatDialog->show();
+        update();
+        event->accept(); // 消耗事件，表示已处理
+    }
     else {
         QWidget::mousePressEvent(event);
     }
@@ -135,13 +145,21 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
 void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
     //qDebug() << "Mouse move pos:" << event->pos();  // 假设是 QGraphicsItem
     if (turtle->containsPoint(event->pos(), m_offset)) {
-        //qDebug() << "Hovering over icon";
         turtle->setNormal(false);
         update();
         event->accept(); // 消耗事件，表示已处理
     }
     else{
-        turtle->setNormal(true);
+        turtle->setNormal(true); //这里掩盖了isnormal初始化的错误
+        event->accept();
+    }
+    if (cat->containsPoint(event->pos(), m_offset)) {
+        cat->setNormal(false);
+        update();
+        event->accept(); // 消耗事件，表示已处理
+    }
+    else{
+        cat->setNormal(true);
         event->accept();
     }
 }

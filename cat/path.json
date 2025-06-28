@@ -1,8 +1,8 @@
 {
   "pathSettings": {
     "type": "diagonal",
-    "startPoint": [100, 100],
-    "endPoint": [300, 500],
+    "startPoint": [1000, 780],
+    "endPoint": [1000, 930],
     "step": 2
   }
 }
