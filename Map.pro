@@ -20,14 +20,14 @@ SOURCES += \
     source_file/imageviewer.cpp
 
 HEADERS += \
-    head_file/chatdialog.h \
-    head_file/imageviewer.h \
-    head_file/imagewidget.h \
-    head_file/mapicon.h \
-    head_file/movingicon.h \
-    head_file/navigationwidget.h \
-    head_file/coverwidget.h  \
-    head_file/pathgenerator.h \
+    header_file/chatdialog.h \
+    header_file/imageviewer.h \
+    header_file/imagewidget.h \
+    header_file/mapicon.h \
+    header_file/movingicon.h \
+    header_file/navigationwidget.h \
+    header_file/coverwidget.h  \
+    header_file/pathgenerator.h \
 
 FORMS += \
     ui/chatdialog.ui \

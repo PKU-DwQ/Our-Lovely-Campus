@@ -18,8 +18,8 @@
 #include <QDir>
 #include <QTimer>
 #include <QPixmap>
-#include "head_file/imagewidget.h"
-#include "head_file/imageviewer.h"
+#include "header_file/imagewidget.h"
+#include "header_file/imageviewer.h"
 
 
 class ChatDialog : public QDialog {

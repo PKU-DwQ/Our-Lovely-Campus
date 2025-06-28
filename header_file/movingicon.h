@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QList>
-#include "mapicon.h"
+#include "header_file/mapicon.h"
 
 class MovingIcon : public MapIcon {
     Q_OBJECT // 确保包含 Q_OBJECT 宏

@@ -1,4 +1,4 @@
-#include "head_file/pathgenerator.h"
+#include "header_file/pathgenerator.h"
 #include <QJsonArray>
 #include <cmath> // 用于圆形路径计算
 #include <QJsonValue>

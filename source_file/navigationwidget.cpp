@@ -1,4 +1,4 @@
-#include "head_file/navigationwidget.h"
+#include "header_file/navigationwidget.h"
 #include <QHBoxLayout>
 
 NavigationWidget::NavigationWidget(const QString& imagePath, QWidget* parent)

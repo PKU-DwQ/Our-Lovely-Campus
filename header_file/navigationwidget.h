@@ -5,7 +5,7 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QTimer>
-#include "imageviewer.h"
+#include "header_file/imageviewer.h"
 
 class NavigationWidget : public QWidget {
     Q_OBJECT

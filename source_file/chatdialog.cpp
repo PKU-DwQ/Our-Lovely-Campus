@@ -1,5 +1,5 @@
-#include "head_file/chatdialog.h"
-#include "head_file/imageviewer.h"
+#include "header_file/chatdialog.h"
+#include "header_file/imageviewer.h"
 #include <QPainter>
 #include <QFont>
 #include <QResizeEvent>

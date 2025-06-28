@@ -1,5 +1,5 @@
-#include "head_file/movingicon.h"
-#include "head_file/pathgenerator.h"
+#include "header_file/movingicon.h"
+#include "header_file/pathgenerator.h"
 #include <QFile>
 #include <QIODevice>
 #include <QJsonDocument>

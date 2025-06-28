@@ -1,7 +1,7 @@
-#include "head_file/imageviewer.h"
-#include "head_file/movingicon.h"
-#include "head_file/chatdialog.h"
-#include "head_file/pathgenerator.h"
+#include "header_file/imageviewer.h"
+#include "header_file/movingicon.h"
+#include "header_file/chatdialog.h"
+#include "header_file/pathgenerator.h"
 #include <QFont>
 #include <QThread>
 

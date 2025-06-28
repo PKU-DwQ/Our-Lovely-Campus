@@ -1,4 +1,4 @@
-#include "head_file/imagewidget.h"
+#include "header_file/imagewidget.h"
 ImageWidget::ImageWidget(QWidget* parent) : QWidget(parent) {}
 
 void ImageWidget::setPixmap(const QPixmap& pix) {

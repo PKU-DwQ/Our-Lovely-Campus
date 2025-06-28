@@ -9,8 +9,7 @@
 #include <QKeyEvent>
 #include <QFocusEvent>
 #include <QDebug>
-#include "mapicon.h"
-#include "movingicon.h"
+#include "header_file/movingicon.h"
 
 class ImageViewer : public QWidget {
     Q_OBJECT
