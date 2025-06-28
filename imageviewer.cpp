@@ -9,7 +9,7 @@ void ImageViewer::focusInEvent(QFocusEvent* event) {
 }
 
 void ImageViewer::setupMovingIcon() {
-    turtle = new MovingIcon("Icon_image/cat/normal", 20, 16, 100, 50, 50); // 切换间隔1秒，移动间隔50毫秒
+    turtle = new MovingIcon("swan", 20, 11, 100, 50, 50); // 切换间隔1秒，移动间隔50毫秒
 
     // 初始化定时器
     m_switchTimer = new QTimer(this);
@@ -95,20 +95,14 @@ QPoint ImageViewer::getOffset() const {
 
 void ImageViewer::mousePressEvent(QMouseEvent* event) {
     // 检查是否点击在图标上
+    // 检查是否点击在图标上
     if (turtle->containsPoint(event->pos(), m_offset)) {
         //qDebug() << "Mouse click pos:" << event->pos();
-        QWidget* newWindow = new QWidget();
-        newWindow->setWindowTitle("Turle");
-        newWindow->resize(800, 600);
-
-        // 在新窗口中绘制内容
-        QLabel* label = new QLabel("可爱的小乌龟", newWindow);
-        label->setAlignment(Qt::AlignCenter);
-        label->setFont(QFont("Arial", 16));
-
-        newWindow->show();
-
-        m_mapIcon.onClicked();
+        ChatDialog *chatDialog = new ChatDialog(":/test/1.png",
+                                                "这是pku一只可爱的小乌龟,在未名湖里游啊游。",
+                                                this);
+        chatDialog->setAttribute(Qt::WA_DeleteOnClose);
+        chatDialog->show();
         update();
         event->accept(); // 消耗事件，表示已处理
     }
@@ -120,7 +114,7 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
 void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
     //qDebug() << "Mouse move pos:" << event->pos();  // 假设是 QGraphicsItem
     if (turtle->containsPoint(event->pos(), m_offset)) {
-        qDebug() << "Hovering over icon";
+        //qDebug() << "Hovering over icon";
         turtle->setNormal(false);
         update();
         event->accept(); // 消耗事件，表示已处理
@@ -134,8 +128,8 @@ void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
 void ImageViewer::keyPressEvent(QKeyEvent* event) {
     if (event->key() == Qt::Key_Space) {
         // 计算图片中心位置
-        int centerX = m_offset.x() + width() / 2;
-        int centerY = m_offset.y() + height() / 2;
+        //int centerX = m_offset.x() + width() / 2;
+        //int centerY = m_offset.y() + height() / 2;
 
         // 设置图标位置
         //m_mapIcon.setPosition(centerX, centerY);

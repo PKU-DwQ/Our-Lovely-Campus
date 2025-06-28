@@ -4,3 +4,4 @@
 #用utf-8编码
 # 构建目录
 build/
+config.json

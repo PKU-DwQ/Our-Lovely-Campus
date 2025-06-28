@@ -76,7 +76,7 @@ ChatDialog::ChatDialog(const QString& imagePath, const QString& infoText, QWidge
     connect(userInput, &QLineEdit::returnPressed, this, &ChatDialog::sendMessage);
 
     // 添加欢迎消息
-    addMessage("北大小助手", "您好！我是您的北大导览员，有什么可以帮您的吗？");
+    addMessage("北大小乌龟", "您好！我是pku一只可爱的小乌龟,在未名湖里游啊游");
 }
 
 void ChatDialog::paintEvent(QPaintEvent *event) {
@@ -139,8 +139,18 @@ void ChatDialog::sendMessage() {
     // 准备API请求
     QNetworkRequest request(QUrl("https://api.deepseek.com/v1/chat/completions"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader("Authorization", "Bearer APIKeys"); // 替换为实际API密钥
-
+    // 读取 config.json
+    QFile configFile(":/config.json");
+    if (configFile.open(QIODevice::ReadOnly)) {
+        QJsonDocument doc = QJsonDocument::fromJson(configFile.readAll());
+        QJsonObject obj = doc.object();
+        QString apiKey = obj["api_key"].toString();
+        qDebug() << "apiKey:" << apiKey;
+        request.setRawHeader("Authorization", apiKey.toUtf8());
+    }
+    else {
+        qDebug() << "failed to open jsonfile";
+    }
     // 构建请求数据
     QJsonObject messageObject;
     messageObject["role"] = "user";

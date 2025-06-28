@@ -7,10 +7,10 @@ MapIcon::MapIcon(const QString& iconFilePath,  const int normalNum, const int cl
     for (int i = 0; i < normalNum + clickNum; i++){
         QString iconPath = ":/" + iconFilePath + "/" + QString::number(i) +".png";
         if (!m_icon[i].load(iconPath)) {
-            qDebug() << "can't load icon" << i;
+           // qDebug() << "can't load icon" << i;
         }
         else{
-            qDebug() << "successfully load icon" << i;
+          //  qDebug() << "successfully load icon" << i;
         }
     }
     m_visible=true;

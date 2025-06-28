@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/">
+        <file>swan/1.png</file>
+        <file>swan/10.png</file>
+        <file>swan/11.png</file>
+        <file>swan/12.png</file>
+        <file>swan/13.png</file>
+        <file>swan/14.png</file>
+        <file>swan/15.png</file>
+        <file>swan/16.png</file>
+        <file>swan/17.png</file>
+        <file>swan/18.png</file>
+        <file>swan/19.png</file>
+        <file>swan/2.png</file>
+        <file>swan/20.png</file>
+        <file>swan/21.png</file>
+        <file>swan/22.png</file>
+        <file>swan/23.png</file>
+        <file>swan/24.png</file>
+        <file>swan/25.png</file>
+        <file>swan/26.png</file>
+        <file>swan/27.png</file>
+        <file>swan/28.png</file>
+        <file>swan/3.png</file>
+        <file>swan/4.png</file>
+        <file>swan/5.png</file>
+        <file>swan/6.png</file>
+        <file>swan/7.png</file>
+        <file>swan/8.png</file>
+        <file>swan/9.png</file>
+        <file>swan/29.png</file>
+        <file>swan/30.png</file>
+        <file>swan/31.png</file>
+    </qresource>
+</RCC>
