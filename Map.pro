@@ -9,23 +9,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    chatdialog.cpp \
-    foganimationwidget.cpp \
-    imageviewer.cpp \
+    source_file/chatdialog.cpp \
+    source_file/imageviewer.cpp \
     main.cpp \
-    mapicon.cpp \
-    movingicon.cpp \
-    navigationwidget.cpp \
-    coverwidget.cpp
+    source_file/mapicon.cpp \
+    source_file/movingicon.cpp \
+    source_file/navigationwidget.cpp \
+    source_file/coverwidget.cpp
 
 HEADERS += \
-    chatdialog.h \
-    foganimationwidget.h \
-    imageviewer.h \
-    mapicon.h \
-    movingicon.h \
-    navigationwidget.h \
-    coverwidget.h
+    head_file/chatdialog.h \
+    head_file/imageviewer.h \
+    head_file/mapicon.h \
+    head_file/movingicon.h \
+    head_file/navigationwidget.h \
+    head_file/coverwidget.h
 
 FORMS += \
     chatdialog.ui \
