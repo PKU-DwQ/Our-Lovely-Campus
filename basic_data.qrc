@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image_database/map.jpg</file>
+        <file>image_database/cover.png</file>
+        <file>config.json</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/">
+        <file>turtle/0.png</file>
+        <file>turtle/1.png</file>
+        <file>turtle/10.png</file>
+        <file>turtle/11.png</file>
+        <file>turtle/12.png</file>
+        <file>turtle/13.png</file>
+        <file>turtle/14.png</file>
+        <file>turtle/15.png</file>
+        <file>turtle/16.png</file>
+        <file>turtle/17.png</file>
+        <file>turtle/18.png</file>
+        <file>turtle/19.png</file>
+        <file>turtle/2.png</file>
+        <file>turtle/20.png</file>
+        <file>turtle/21.png</file>
+        <file>turtle/22.png</file>
+        <file>turtle/23.png</file>
+        <file>turtle/24.png</file>
+        <file>turtle/25.png</file>
+        <file>turtle/26.png</file>
+        <file>turtle/27.png</file>
+        <file>turtle/28.png</file>
+        <file>turtle/29.png</file>
+        <file>turtle/3.png</file>
+        <file>turtle/30.png</file>
+        <file>turtle/4.png</file>
+        <file>turtle/5.png</file>
+        <file>turtle/6.png</file>
+        <file>turtle/7.png</file>
+        <file>turtle/8.png</file>
+        <file>turtle/9.png</file>
+    </qresource>
+</RCC>

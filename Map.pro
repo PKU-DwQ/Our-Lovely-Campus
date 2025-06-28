@@ -114,5 +114,6 @@ DISTFILES += \
     test/9.png
 
 RESOURCES += \
-    image.qrc \
-    swan.qrc
+    basic_data.qrc \
+    swan.qrc \
+    turtle.qrc
