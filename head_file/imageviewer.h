@@ -27,6 +27,7 @@ public:
     QPixmap m_background;
     QPoint m_offset;
     MovingIcon* turtle;
+    MovingIcon* cat;
     QTimer* m_switchTimer;
     QTimer* m_moveTimer;
 };

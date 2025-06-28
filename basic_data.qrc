@@ -4,5 +4,8 @@
         <file>config.json</file>
         <file>image_database/cover.jpeg</file>
         <file>image_database/cover_.png</file>
+        <file>config/path_config_circle.json</file>
+        <file>config/path_config_diagnal.json</file>
+        <file>config/path_config_rectangle.json</file>
     </qresource>
 </RCC>

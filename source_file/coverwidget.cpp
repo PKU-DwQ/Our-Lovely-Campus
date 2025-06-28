@@ -1,4 +1,4 @@
-#include "coverwidget.h"
+#include "head_file/coverwidget.h"
 #include <QPainter>
 #include <QVBoxLayout>
 #include <QFont>

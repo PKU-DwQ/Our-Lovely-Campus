@@ -2,8 +2,8 @@
 #include <QWidget>
 //#include "mapicon.h"
 //#include "imageviewer.h"
-#include "navigationwidget.h"
-#include "coverwidget.h"
+#include "head_file/navigationwidget.h"
+#include "head_file/coverwidget.h"
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);

@@ -1,4 +1,11 @@
-#include "movingicon.h"
+#include "head_file/movingicon.h"
+#include "head_file/pathgenerator.h"
+#include <QFile>
+#include <QIODevice>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QList>
+#include <QPoint>
 
 MovingIcon::MovingIcon(const QString& iconFilePath,  const int normalNum, const int clickNum, int iconsize, int switchInterval, int moveInterval)
     : MapIcon(iconFilePath, normalNum, clickNum, iconsize),
@@ -6,17 +13,42 @@ MovingIcon::MovingIcon(const QString& iconFilePath,  const int normalNum, const 
     m_switchInterval(switchInterval),
     m_moveInterval(moveInterval)
 {
+    qDebug() << "Loading icon:" << iconFilePath << "success";
+    QString configPath = ":/config/path_config_diagnal.json";
+    QFile configFile(configPath);
+    /*if (configFile.open(QIODevice::ReadOnly)) {
+        QJsonDocument configDoc = QJsonDocument::fromJson(configFile.readAll());
+        QList<QPoint> path = PathGenerator::generateFromJson(configDoc.object());
+        setPath(path);
+    }
+    else {
+        QList<QPoint> path;
+        int a = 1000, b = 1100;
+        for (int i=a;i<b;i=i+2){
+            path << QPoint(i, a);}
+        for (int j=a;j<b;j+=2){
+            path<<QPoint(b,j);
+        }
+        for (int i=b;i>a;i-=2){
+            path<<QPoint(i,b);
+        }
+        for (int j=b;j>a;j-=2){
+            path<<QPoint(a,j);
+        }
+        setPath(path);
+    }*/
     QList<QPoint> path;
-    for (int i=800;i<900;i=i+2){
-        path << QPoint(i, 800);}
-    for (int j=800;j<900;j+=2){
-        path<<QPoint(900,j);
+    int a = 0, b = 100;
+    for (int i=a;i<b;i=i+2){
+        path << QPoint(i, a);}
+    for (int j=a;j<b;j+=2){
+        path<<QPoint(b,j);
     }
-    for (int i=900;i>800;i-=2){
-        path<<QPoint(i,900);
+    for (int i=b;i>a;i-=2){
+        path<<QPoint(i,b);
     }
-    for (int j=900;j>800;j-=2){
-        path<<QPoint(800,j);
+    for (int j=b;j>a;j-=2){
+        path<<QPoint(a,j);
     }
     setPath(path);
 }

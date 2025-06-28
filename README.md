@@ -21,8 +21,12 @@
     并非是最熟悉的一切  
 <br><br>
 <img src="readme/1.jpg" alt="图片描述" width="50%">
+
 ### 项目结构
 
+- `./source/` 之下是所有的`.cpp`文件 (`main.cpp`除外)
+
+- `./head/` 之下是所有的`.h`文件 
 
 ### 文件配置
 

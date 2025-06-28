@@ -1,0 +1,9 @@
+{
+  "pathSettings": {
+    "type": "circle",
+    "center": [850, 850],
+    "radius": 50,
+    "points": 36,
+    "direction": "clockwise"
+  }
+}

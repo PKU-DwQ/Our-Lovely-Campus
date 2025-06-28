@@ -1,7 +1,9 @@
-#include "imageviewer.h"
-#include "movingicon.h"
-#include"chatdialog.h"
+#include "head_file/imageviewer.h"
+#include "head_file/movingicon.h"
+#include"head_file/chatdialog.h"
+#include "head_file/pathgenerator.h"
 #include <QFont>
+#include <QThread>
 
 void ImageViewer::focusInEvent(QFocusEvent* event) {
     Q_UNUSED(event);
@@ -11,19 +13,33 @@ void ImageViewer::focusInEvent(QFocusEvent* event) {
 void ImageViewer::setupMovingIcon() {
 
     //创建turtle活点
-    turtle = new MovingIcon("cat", 21, 16, 200, 50, 50); // 切换间隔1秒，移动间隔50毫秒
-
+    turtle = new MovingIcon("turtle", 20, 11, 50, 50, 50); // 切换间隔1秒，移动间隔50毫秒
+    cat = new MovingIcon("cat", 20, 10, 200, 50, 50);
     // 初始化定时器
     m_switchTimer = new QTimer(this);
     m_moveTimer = new QTimer(this);
 
     // 连接信号和槽
+    Q_ASSERT(thread() == QThread::currentThread());
     connect(m_switchTimer, &QTimer::timeout, this, [this]() {
-        this->update();  // 明确调用无参版本
+        // 检查对象是否有效
+        if(!turtle || !cat) {
+            qWarning() << "Icons are invalid!";
+            return;
+        }
+        turtle->switchIcon();
+        turtle->moveAlongPath();
+        cat->switchIcon();
+        cat->moveAlongPath();
+        this->update();
+    }); //更优的写法
+    /*
+    connect(m_switchTimer, &QTimer::timeout, this, [this]() {
+        //this->update();  // 明确调用无参版本
     });
-    connect(m_switchTimer, &QTimer::timeout, turtle, &MovingIcon::switchIcon);
     connect(m_moveTimer, &QTimer::timeout, turtle, &MovingIcon::moveAlongPath);
-
+    connect(m_switchTimer, &QTimer::timeout, cat, &MovingIcon::switchIcon);
+    connect(m_moveTimer, &QTimer::timeout, cat, &MovingIcon::moveAlongPath);*/
     // 启动定时器
     m_switchTimer->start(50);
     m_moveTimer->start(50);
@@ -31,13 +47,13 @@ void ImageViewer::setupMovingIcon() {
 }
 
 ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)
-    : QWidget(parent), m_offset(600, 700) // 初始地点:未名湖畔m_offset(780, 1080)
+    : QWidget(parent), m_offset(0, 0) // 初始地点:未名湖畔m_offset(780, 1080)
 {
     m_background.load(imagePath);
-    setMinimumSize(600, 300);
+    setMinimumSize(1200, 1000);
     setFocusPolicy(Qt::StrongFocus); // 允许接收键盘事件
     setMouseTracking(true); // 默认不跟踪鼠标 设置为跟踪
-    setupMovingIcon(); //这里修改参数
+    setupMovingIcon();
 }
 
 
@@ -55,9 +71,12 @@ void ImageViewer::paintEvent(QPaintEvent* event)
 
     // 绘制地图图标 信息栏
     // 绘制移动图标
-    if (turtle) {
+    qDebug() << "Turtle position:" << turtle->m_position;
+    qDebug() << "Cat position:" << cat->m_position;
+    if (turtle)
         turtle->draw(painter, m_offset);
-    }
+    if (cat)
+        cat->draw(painter, m_offset);
 
 
     painter.fillRect(0, 0, width(), 30, QColor(0, 0, 0, 150));
@@ -128,20 +147,7 @@ void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void ImageViewer::keyPressEvent(QKeyEvent* event) {
-    if (event->key() == Qt::Key_Space) {
-        // 计算图片中心位置
-        //int centerX = m_offset.x() + width() / 2;
-        //int centerY = m_offset.y() + height() / 2;
-
-        // 设置图标位置
-        //m_mapIcon.setPosition(centerX, centerY);
-
-        // 切换图标可见性
-       // m_mapIcon.toggleVisibility();
-
-        update(); // 重绘
-    }
-    else if (event->key() == Qt::Key_Up) {
+    if (event->key() == Qt::Key_Up) {
         this->moveView(0, -10);
     }
     else if (event->key() == Qt::Key_Down) {
