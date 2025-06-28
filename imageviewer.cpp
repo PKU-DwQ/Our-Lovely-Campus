@@ -1,6 +1,6 @@
 #include "imageviewer.h"
 #include "movingicon.h"
-#include <QLabel>
+#include"chatdialog.h"
 #include <QFont>
 
 void ImageViewer::focusInEvent(QFocusEvent* event) {
@@ -107,6 +107,8 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
         label->setFont(QFont("Arial", 16));
 
         newWindow->show();
+
+        m_mapIcon.onClicked();
         update();
         event->accept(); // 消耗事件，表示已处理
     }
