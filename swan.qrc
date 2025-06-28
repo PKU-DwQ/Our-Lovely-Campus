@@ -32,5 +32,6 @@
         <file>swan/30.png</file>
         <file>swan/31.png</file>
         <file>swan/0.png</file>
+        <file>turtle/path.json</file>
     </qresource>
 </RCC>

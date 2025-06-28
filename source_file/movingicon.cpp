@@ -14,9 +14,9 @@ MovingIcon::MovingIcon(const QString& iconFilePath,  const int normalNum, const 
     m_moveInterval(moveInterval)
 {
     qDebug() << "Loading icon:" << iconFilePath << "success";
-    QString configPath = ":/config/path_config_diagnal.json";
+    QString configPath = ":/" + iconFilePath + "/path.json";
     QFile configFile(configPath);
-    /*if (configFile.open(QIODevice::ReadOnly)) {
+    if (configFile.open(QIODevice::ReadOnly)) {
         QJsonDocument configDoc = QJsonDocument::fromJson(configFile.readAll());
         QList<QPoint> path = PathGenerator::generateFromJson(configDoc.object());
         setPath(path);
@@ -36,21 +36,7 @@ MovingIcon::MovingIcon(const QString& iconFilePath,  const int normalNum, const 
             path<<QPoint(a,j);
         }
         setPath(path);
-    }*/
-    QList<QPoint> path;
-    int a = 0, b = 100;
-    for (int i=a;i<b;i=i+2){
-        path << QPoint(i, a);}
-    for (int j=a;j<b;j+=2){
-        path<<QPoint(b,j);
     }
-    for (int i=b;i>a;i-=2){
-        path<<QPoint(i,b);
-    }
-    for (int j=b;j>a;j-=2){
-        path<<QPoint(a,j);
-    }
-    setPath(path);
 }
 
 void MovingIcon::start() {/*
