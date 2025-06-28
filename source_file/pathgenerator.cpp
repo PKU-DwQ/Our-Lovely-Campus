@@ -91,6 +91,12 @@ QList<QPoint> PathGenerator::generateFromJson(const QJsonObject& config) {
             int y = start.y() + dy * ratio;
             path << QPoint(x, y);
         }
+        for (int i = steps; i >= 0; --i) {
+            float ratio = static_cast<float>(i) / steps;
+            int x = start.x() + dx * ratio;
+            int y = start.y() + dy * ratio;
+            path << QPoint(x, y);
+        }
     }
 
     return path;

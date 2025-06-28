@@ -1,4 +1,5 @@
 #include "head_file/chatdialog.h"
+#include "head_file/imageviewer.h"
 #include <QPainter>
 #include <QFont>
 #include <QResizeEvent>
@@ -7,6 +8,16 @@
 #include <QSpacerItem>
 #include <QTimer>
 
+
+ChatDialog* makeChatDialog(QString name, ImageViewer* p){
+    return new ChatDialog(":/" + name,
+                   2,
+                   "这是pku一只可爱的小乌龟,在未名湖里游啊游。",
+                   "您好！我是pku一只可爱的小乌龟,在未名湖里游啊游",
+                   "你是一只生活在未名湖里的乌龟，你的名字叫小北。你热爱北大，喜欢帮助游客和同学。请用可爱、活泼的语气回答问题。",
+                   "未名湖小龟",
+                   p);
+}
 ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText,
                        const QString&welcome, const QString& identity, const QString&name, QWidget *parent) :
     QDialog(parent), m_imagePath(imagePath), m_infoText(infoText),m_imagenum(num),welcomewords(welcome),Defaultidentity(identity),name(name) {

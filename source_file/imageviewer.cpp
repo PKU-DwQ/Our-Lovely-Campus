@@ -14,7 +14,7 @@ void ImageViewer::setupMovingIcon() {
 
     //创建turtle活点
     turtle = new MovingIcon("turtle", 20, 11, 80, 50, 50); // 切换间隔1秒，移动间隔50毫秒
-    cat = new MovingIcon("cat", 20, 10, 200, 50, 50);
+    cat = new MovingIcon("cat", 20, 10, 200, 30, 50);
     // 初始化定时器
     m_switchTimer = new QTimer(this);
     m_moveTimer = new QTimer(this);
@@ -119,13 +119,7 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
     // 检查是否点击在图标上
     if (turtle->containsPoint(event->pos(), m_offset)) {
         //qDebug() << "Mouse click pos:" << event->pos();
-        ChatDialog *chatDialog = new ChatDialog(":/turtle",
-                                                2,
-                                                "这是pku一只可爱的小乌龟,在未名湖里游啊游。",
-                                                "您好！我是pku一只可爱的小乌龟,在未名湖里游啊游",
-                                                "你是一只生活在未名湖里的乌龟，你的名字叫小北。你热爱北大，喜欢帮助游客和同学。请用可爱、活泼的语气回答问题。",
-                                                "未名湖小龟",
-                                                this);
+        ChatDialog *chatDialog = makeChatDialog("turtle", this);
         chatDialog->setAttribute(Qt::WA_DeleteOnClose);
         chatDialog->show();
         update();
@@ -173,17 +167,18 @@ void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void ImageViewer::keyPressEvent(QKeyEvent* event) {
+    int d = 20;
     if (event->key() == Qt::Key_Up) {
-        this->moveView(0, -10);
+        this->moveView(0, -d);
     }
     else if (event->key() == Qt::Key_Down) {
-        this->moveView(0, 10);
+        this->moveView(0, d);
     }
     else if (event->key() == Qt::Key_Left) {
-        this->moveView(-10, 0);
+        this->moveView(-d, 0);
     }
     else if (event->key() == Qt::Key_Right) {
-        this->moveView(10, 0);
+        this->moveView(d, 0);
     }
 }
 

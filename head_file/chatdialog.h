@@ -19,6 +19,8 @@
 #include <QTimer>
 #include <QPixmap>
 #include "head_file/imagewidget.h"
+#include "head_file/imageviewer.h"
+
 
 class ChatDialog : public QDialog {
     Q_OBJECT
@@ -55,5 +57,5 @@ private:
     QString Defaultidentity;
     QString name;
 };
-
+ChatDialog* makeChatDialog(QString name, ImageViewer* p);
 #endif // CHATDIALOG_H
