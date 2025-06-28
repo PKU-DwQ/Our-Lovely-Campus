@@ -16,13 +16,15 @@
 #include <QLabel>
 #include <QFile>
 #include <QDir>
+#include <QTimer>
 #include <QPixmap>
 #include "head_file/imagewidget.h"
 
 class ChatDialog : public QDialog {
     Q_OBJECT
 public:
-    explicit ChatDialog(const QString& imagePath, int imagenum, const QString& infoText, QWidget *parent = nullptr);
+    explicit ChatDialog(const QString& imagePath, int imagenum, const QString& infoText,
+                        const QString& welcome, const QString& identity, const QString&name, QWidget *parent = nullptr);
     void updateImage();
     void addMessage(const QString &sender, const QString &message);
 
@@ -48,6 +50,10 @@ private:
     QLineEdit *userInput;
     QPushButton *sendButton;
     QNetworkAccessManager *networkManager;
+    QJsonArray m_chatHistory;
+    QString welcomewords;
+    QString Defaultidentity;
+    QString name;
 };
 
 #endif // CHATDIALOG_H

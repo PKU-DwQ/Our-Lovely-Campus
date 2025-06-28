@@ -122,6 +122,9 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
         ChatDialog *chatDialog = new ChatDialog(":/turtle",
                                                 2,
                                                 "这是pku一只可爱的小乌龟,在未名湖里游啊游。",
+                                                "您好！我是pku一只可爱的小乌龟,在未名湖里游啊游",
+                                                "你是一只生活在未名湖里的乌龟，你的名字叫小北。你热爱北大，喜欢帮助游客和同学。请用可爱、活泼的语气回答问题。",
+                                                "未名湖小龟",
                                                 this);
         chatDialog->setAttribute(Qt::WA_DeleteOnClose);
         chatDialog->show();
@@ -133,6 +136,9 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
         ChatDialog *chatDialog = new ChatDialog(":/turtle/1.png",
                                                 1,
                                                 "这是pku一只可爱的小乌龟,在未名湖里游啊游。",
+                                                "您好！我是pku一只可爱的小乌龟,在未名湖里游啊游",
+                                                "你是一只生活在未名湖里的乌龟，你的名字叫小北。你热爱北大，喜欢帮助游客和同学。请用可爱、活泼的语气回答问题。",
+                                                "未名湖小龟",
                                                 this);
         chatDialog->setAttribute(Qt::WA_DeleteOnClose);
         chatDialog->show();

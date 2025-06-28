@@ -5,10 +5,11 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QSpacerItem>
+#include <QTimer>
 
-
-ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText, QWidget *parent) :
-    QDialog(parent), m_imagePath(imagePath), m_infoText(infoText),m_imagenum(num) {
+ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText,
+                       const QString&welcome, const QString& identity, const QString&name, QWidget *parent) :
+    QDialog(parent), m_imagePath(imagePath), m_infoText(infoText),m_imagenum(num),welcomewords(welcome),Defaultidentity(identity),name(name) {
     setWindowTitle("北大地图助手");
     resize(600, 700); // 增大窗口尺寸以适应新布局
 
@@ -166,8 +167,19 @@ ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText
     connect(m_nextButton, &QPushButton::clicked, this, &ChatDialog::nextImage);
 
     // 添加欢迎消息
-    addMessage("北大小乌龟", "您好！我是pku一只可爱的小乌龟,在未名湖里游啊游");
+    addMessage(name, welcomewords);
     loadCurrentImage();
+
+    // 设置AI角色为乌龟（后台操作，不显示）
+    QTimer::singleShot(100, this, [this]() {
+        // 构建系统消息（不显示在界面上）
+        QJsonObject systemMessage;
+        systemMessage["role"] = "system";
+        systemMessage["content"] = Defaultidentity;
+
+        // 添加到消息历史但不显示
+        m_chatHistory.append(systemMessage);
+    });
 }
 
 void ChatDialog::loadCurrentImage() {
@@ -234,14 +246,23 @@ void ChatDialog::sendMessage() {
     QString text = userInput->text().trimmed();
     if (text.isEmpty()) return;
 
-    // 添加用户消息
+    // 添加用户消息到聊天记录（显示）
     addMessage("您", text);
-    userInput->clear();
+
+    // 创建用户消息对象（添加到API请求）
+    QJsonObject userMessage;
+    userMessage["role"] = "user";
+    userMessage["content"] = text;
+    m_chatHistory.append(userMessage);
+
+    // 显示"思考中..."提示
+    addMessage(name, "思考中...");
 
     // 准备API请求
     QNetworkRequest request(QUrl("https://api.deepseek.com/v1/chat/completions"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    // 读取 config.json
+
+    // 读取API密钥
     QFile configFile(":/config.json");
     if (configFile.open(QIODevice::ReadOnly)) {
         QJsonDocument doc = QJsonDocument::fromJson(configFile.readAll());
@@ -253,14 +274,10 @@ void ChatDialog::sendMessage() {
         qDebug() << "failed to open jsonfile";
     }
 
-    // 构建请求数据
-    QJsonObject messageObject;
-    messageObject["role"] = "user";
-    messageObject["content"] = text;
-
+    // 构建请求数据（包含系统消息和完整对话历史）
     QJsonObject requestData;
     requestData["model"] = "deepseek-chat";
-    requestData["messages"] = QJsonArray() << messageObject;
+    requestData["messages"] = m_chatHistory; // 使用完整对话历史
     requestData["temperature"] = 0.7;
     requestData["max_tokens"] = 2000;
 
@@ -268,9 +285,7 @@ void ChatDialog::sendMessage() {
 
     // 发送请求
     QNetworkReply *reply = networkManager->post(request, doc.toJson());
-
-    // 显示加载状态
-    addMessage("北大小助手", "思考中...");
+    userInput->clear();
 
     // 连接响应处理
     connect(reply, &QNetworkReply::finished, this, [this, reply]() {
@@ -281,7 +296,7 @@ void ChatDialog::sendMessage() {
 
 void ChatDialog::handleApiResponse(QNetworkReply *reply) {
     if (reply->error() != QNetworkReply::NoError) {
-        addMessage("DeepSeek AI", "请求失败: " + reply->errorString());
+        addMessage(name, "请求失败: " + reply->errorString());
         return;
     }
 
@@ -290,13 +305,13 @@ void ChatDialog::handleApiResponse(QNetworkReply *reply) {
     QJsonObject jsonObject = jsonResponse.object();
 
     if (!jsonObject.contains("choices")) {
-        addMessage("DeepSeek AI", "无效的API响应");
+        addMessage(name, "无效的API响应");
         return;
     }
 
     QJsonArray choices = jsonObject["choices"].toArray();
     if (choices.isEmpty()) {
-        addMessage("DeepSeek AI", "未收到响应内容");
+        addMessage(name, "未收到响应内容");
         return;
     }
 
@@ -311,6 +326,6 @@ void ChatDialog::handleApiResponse(QNetworkReply *reply) {
     chatHistory->textCursor().deletePreviousChar();
 
     // 添加AI回复
-    addMessage("北大小助手", content);
+    addMessage(name, content);
 }
 
