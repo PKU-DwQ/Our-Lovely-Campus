@@ -12,7 +12,7 @@
     世界从不缺乏新奇，缺的是凝视旧事物时，那一瞬恍若初见的停顿。
 
 
-<img src="readme/2.jpg" alt="图片描述" width="50%">
+<img src="readme/2.jpg" alt="图片描述">
 
     我们实现了一张活点地图，  
     图中是你熟悉的北大——  
@@ -29,12 +29,12 @@
 
 #### 具体方法
 
-仿照`config_demo.json`文件,创建`config.json`文件
-内容如下
+仿照`config_demo.json`文件 *(但请不要修改该文件)* , 创建`config.json`文件
+写入内容:
 ```json
 {
-    "api_key": "Bearer <your_api_key>" 
-    #其中<your_api_key>需要替换成真实的api key
+    "_instructions": "替换<your_api_key>为真实密钥",
+    "api_key": "Bearer <your_api_key>"
 }
 ```
 * 注意: `Bearer `是格式的一部分, 请不要自行删除
