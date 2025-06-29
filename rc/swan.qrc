@@ -1,3 +1,53 @@
 <RCC>
-    <qresource prefix="/"/>
+    <qresource prefix="/">
+        <file>icon/swan/0.png</file>
+        <file>icon/swan/1.png</file>
+        <file>icon/swan/10.png</file>
+        <file>icon/swan/11.png</file>
+        <file>icon/swan/12.png</file>
+        <file>icon/swan/13.png</file>
+        <file>icon/swan/14.png</file>
+        <file>icon/swan/15.png</file>
+        <file>icon/swan/16.png</file>
+        <file>icon/swan/17.png</file>
+        <file>icon/swan/18.png</file>
+        <file>icon/swan/19.png</file>
+        <file>icon/swan/2.png</file>
+        <file>icon/swan/20.png</file>
+        <file>icon/swan/21.png</file>
+        <file>icon/swan/22.png</file>
+        <file>icon/swan/23.png</file>
+        <file>icon/swan/24.png</file>
+        <file>icon/swan/25.png</file>
+        <file>icon/swan/26.png</file>
+        <file>icon/swan/27.png</file>
+        <file>icon/swan/28.png</file>
+        <file>icon/swan/29.png</file>
+        <file>icon/swan/3.png</file>
+        <file>icon/swan/30.png</file>
+        <file>icon/swan/31.png</file>
+        <file>icon/swan/32.png</file>
+        <file>icon/swan/33.png</file>
+        <file>icon/swan/34.png</file>
+        <file>icon/swan/35.png</file>
+        <file>icon/swan/36.png</file>
+        <file>icon/swan/37.png</file>
+        <file>icon/swan/38.png</file>
+        <file>icon/swan/39.png</file>
+        <file>icon/swan/4.png</file>
+        <file>icon/swan/40.png</file>
+        <file>icon/swan/41.png</file>
+        <file>icon/swan/42.png</file>
+        <file>icon/swan/43.png</file>
+        <file>icon/swan/44.png</file>
+        <file>icon/swan/45.png</file>
+        <file>icon/swan/46.png</file>
+        <file>icon/swan/47.png</file>
+        <file>icon/swan/5.png</file>
+        <file>icon/swan/6.png</file>
+        <file>icon/swan/7.png</file>
+        <file>icon/swan/8.png</file>
+        <file>icon/swan/9.png</file>
+        <file>icon/swan/rename.ps1</file>
+    </qresource>
 </RCC>
