@@ -98,10 +98,7 @@ QList<QPoint> PathGenerator::generateFromJson(const QJsonObject& config) {
             path << QPoint(x, y);
         }
     }
-
-    return path;
-}
-else if (type == "polyline") {
+    else if (type == "polyline") {
     // 折线路径生成
     QPoint start(pathSettings["startPoint"].toArray()[0].toInt(),
                  pathSettings["startPoint"].toArray()[1].toInt());
@@ -143,4 +140,5 @@ else if (type == "polyline") {
             path << QPoint(x, y);
         }
     }
+    }return path;
 }
