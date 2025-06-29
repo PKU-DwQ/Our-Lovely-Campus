@@ -59,9 +59,9 @@ CoverWidget::CoverWidget(QWidget *parent) : QWidget(parent) {
         m_player->setLoops(QMediaPlayer::Infinite);
         // 开始播放
         m_player->play();
-        qDebug() << "开始播放音乐";
+        qDebug() << "start music";
     } else {
-        qDebug() << "音乐文件未找到:" << musicPath;
+        qDebug() << "music not found:" << musicPath;
     }
 }
 
