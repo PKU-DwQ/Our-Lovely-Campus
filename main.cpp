@@ -4,11 +4,20 @@
 //#include "imageviewer.h"
 #include "header_file/navigationwidget.h"
 #include "header_file/coverwidget.h"
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
+    QMediaPlayer *musicPlayer = new QMediaPlayer();
+    QAudioOutput *audioOutput = new QAudioOutput();
+    musicPlayer->setAudioOutput(audioOutput);
+    musicPlayer->setSource(QUrl("qrc:/music/hh.mp3"));
+    audioOutput->setVolume(50);
+    musicPlayer->setLoops(QMediaPlayer::Infinite);  // 循环播放
+    musicPlayer->play();
 
     // 1. 创建封面窗口
     CoverWidget cover;
@@ -32,5 +41,12 @@ int main(int argc, char* argv[])
         navigation->showMaximized();  // 全屏显示
     });
 
-    return app.exec();
+    int result = app.exec();
+
+    // 清理音乐播放器
+    musicPlayer->stop();
+    delete musicPlayer;
+    delete audioOutput;
+
+    return result;
 }

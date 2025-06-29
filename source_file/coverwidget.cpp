@@ -41,28 +41,6 @@ CoverWidget::CoverWidget(QWidget *parent) : QWidget(parent) {
     // 4. 连接信号槽
     connect(startButton, &QPushButton::clicked, this, &CoverWidget::startNavigation);
 
-    // 5. 初始化音频播放器
-    m_player = new QMediaPlayer(this);
-    m_audioOutput = new QAudioOutput(this);
-    m_player->setAudioOutput(m_audioOutput);
-
-    // 设置音量
-    m_audioOutput->setVolume(50);  // 50% 音量
-
-    // 加载音乐文件
-    QString musicPath = ":/music/hh.mp3";  // 确保音乐文件在资源中
-
-    // 尝试加载音乐文件
-    if (QFile::exists(musicPath)) {
-        m_player->setSource(QUrl(musicPath));
-        // 设置循环播放
-        m_player->setLoops(QMediaPlayer::Infinite);
-        // 开始播放
-        m_player->play();
-        qDebug() << "start music";
-    } else {
-        qDebug() << "music not found:" << musicPath;
-    }
 }
 
 // 绘图事件实现
