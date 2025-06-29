@@ -4,7 +4,8 @@
 #include <QWidget>
 #include <QPixmap>
 #include <QPushButton>
-
+#include <QMediaPlayer>
+#include <QAudioOutput>
 class CoverWidget : public QWidget {
     Q_OBJECT
 public:
@@ -20,6 +21,8 @@ signals:
 private:
     QPixmap coverImage;                              // 成员变量：封面图片
     QPushButton *startButton;                        // 成员变量：开始按钮
+    QMediaPlayer *m_player;
+    QAudioOutput *m_audioOutput;
 };
 
 #endif // COVERWIDGET_H
