@@ -16,10 +16,10 @@ void ImageViewer::focusInEvent(QFocusEvent* event) {
 void ImageViewer::setupMovingIcon() {
 
     //创建活点
-    crane = new MovingIcon("crane", 20, 49, 150);
+    crane = new MovingIcon("crane", 18, 52, 150);
     gecko = new MovingIcon("gecko", 20, 27, 150);
     pillar = new MovingIcon("pillar", 20, 20, 120);
-    turtle = new MovingIcon("turtle", 20, 30, 100); // 切换间隔1秒，移动间隔50毫秒
+    turtle = new MovingIcon("turtle", 18, 31, 100); // 切换间隔1秒，移动间隔50毫秒
     cat = new MovingIcon("cat", 20, 10, 150);
     allIcon << cat << crane << gecko << pillar << turtle; //增加了allIcon 后面都不需要分别增加了, 直接遍历即可
     // 初始化定时器
