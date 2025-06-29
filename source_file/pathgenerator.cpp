@@ -108,6 +108,7 @@ QList<QPoint> PathGenerator::generateFromJson(const QJsonObject& config) {
         bool closed = pathSettings.value("closed").toBool(false);
 
         QList<QPoint> allPoints;
+
         allPoints << start;
 
         // 添加所有途径点
