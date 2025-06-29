@@ -6,5 +6,6 @@
         <file>../config.json</file>
         <file>cloud/left.png</file>
         <file>cloud/right.png</file>
+        <file>music/hh.mp3</file>
     </qresource>
 </RCC>
