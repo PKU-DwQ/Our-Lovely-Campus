@@ -26,12 +26,15 @@ class ImageWidget : public QWidget {
 public:
     explicit ImageWidget(QWidget* parent = nullptr);
     void setPixmap(const QPixmap& pix);
+    void setScaledSize(int width, int height);
 
 protected:
     void paintEvent(QPaintEvent* event) override;
 
 private:
     QPixmap m_pixmap;
+    int m_scaledWidth;
+    int m_scaledHeight;
 };
 
 #endif // IMAGEWIDGET_H
