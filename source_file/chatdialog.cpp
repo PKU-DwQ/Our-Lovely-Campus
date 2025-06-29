@@ -50,7 +50,7 @@ ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText
     // 设置对话框样式
     setStyleSheet(
         "QDialog {"
-        "   background-color: white;"
+        "   background-color: #FFF8DC;"
         "   padding: 10px;"
         "   color: black;"
         "}"
