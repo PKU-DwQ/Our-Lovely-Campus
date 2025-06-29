@@ -122,17 +122,18 @@ void NavigationWidget::createNavigationButtons()
     });
 
     // 连接定时器到移动函数
-    connect(timerUp, &QTimer::timeout, this, [this]() {
-        m_imageViewer->moveView(0, -10);
+    int d = 20;
+    connect(timerUp, &QTimer::timeout, this, [this, d]() {
+        m_imageViewer->moveView(0, -d);
     });
-    connect(timerDown, &QTimer::timeout, this, [this]() {
-        m_imageViewer->moveView(0, 10);
+    connect(timerDown, &QTimer::timeout, this, [this, d]() {
+        m_imageViewer->moveView(0, d);
     });
-    connect(timerLeft, &QTimer::timeout, this, [this]() {
-        m_imageViewer->moveView(-10, 0);
+    connect(timerLeft, &QTimer::timeout, this, [this, d]() {
+        m_imageViewer->moveView(-d, 0);
     });
-    connect(timerRight, &QTimer::timeout, this, [this]() {
-        m_imageViewer->moveView(10, 0);
+    connect(timerRight, &QTimer::timeout, this, [this, d]() {
+        m_imageViewer->moveView(d, 0);
     });
 
     // 添加重置按钮和全屏按钮

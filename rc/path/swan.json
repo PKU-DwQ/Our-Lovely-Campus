@@ -1,8 +1,13 @@
 {
   "pathSettings": {
-    "type": "diagonal",
-    "startPoint": [1920, 1780],
-    "endPoint": [1950, 1910],
-    "step": 1
+    "type": "polyline",
+    "startPoint": [1600, 1240],
+    "wayPoints": [
+      [1700, 1240],
+      [1700, 1500]
+    ],
+    "endPoint": [1600, 1400],
+    "step": 2,
+    "closed": true
   }
 }

@@ -145,16 +145,16 @@ void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
 
 void ImageViewer::keyPressEvent(QKeyEvent* event) {
     int d = 20;
-    if (event->key() == Qt::Key_Up) {
+    if (event->key() == Qt::Key_Up or event->key() == Qt::Key_W) {
         this->moveView(0, -d);
     }
-    else if (event->key() == Qt::Key_Down) {
+    else if (event->key() == Qt::Key_Down or event->key() == Qt::Key_S) {
         this->moveView(0, d);
     }
-    else if (event->key() == Qt::Key_Left) {
+    else if (event->key() == Qt::Key_Left or event->key() == Qt::Key_A) {
         this->moveView(-d, 0);
     }
-    else if (event->key() == Qt::Key_Right) {
+    else if (event->key() == Qt::Key_Right or event->key() == Qt::Key_D) {
         this->moveView(d, 0);
     }
 }
