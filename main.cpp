@@ -11,13 +11,13 @@
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
-    QMediaPlayer *musicPlayer = new QMediaPlayer();
-    QAudioOutput *audioOutput = new QAudioOutput();
-    musicPlayer->setAudioOutput(audioOutput);
-    musicPlayer->setSource(QUrl("qrc:/music/hh.mp3"));
-    audioOutput->setVolume(50);
-    musicPlayer->setLoops(QMediaPlayer::Infinite);  // 循环播放
-    musicPlayer->play();
+    // QMediaPlayer *musicPlayer = new QMediaPlayer();
+    // QAudioOutput *audioOutput = new QAudioOutput();
+    // musicPlayer->setAudioOutput(audioOutput);
+    // musicPlayer->setSource(QUrl("qrc:/music/1.mp3"));
+    // audioOutput->setVolume(50);
+    // musicPlayer->setLoops(QMediaPlayer::Infinite);  // 循环播放
+    // musicPlayer->play();
 
     // 1. 创建封面窗口
     CoverWidget cover;
