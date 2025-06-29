@@ -246,14 +246,13 @@ void ChatDialog::loadCurrentImage() {
         }
     }
 
-    // 更新页码显示
-    updateImage();
 }
 
 
 void ChatDialog::updateImage() {
     // 更新页码标签
     m_pageLabel->setText(QString("%1/%2").arg(m_currentImageIndex + 1).arg(m_imagenum + 1));
+    loadCurrentImage();
     update(); // 触发重绘
 }
 

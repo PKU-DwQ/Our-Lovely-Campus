@@ -40,40 +40,6 @@ CoverWidget::CoverWidget(QWidget *parent) : QWidget(parent) {
 
     // 4. 连接信号槽
     connect(startButton, &QPushButton::clicked, this, &CoverWidget::startNavigation);
-
-<<<<<<< HEAD
-=======
-    // 5. 初始化音频播放器
-    m_player = new QMediaPlayer(this);
-    m_audioOutput = new QAudioOutput(this);
-    m_player->setAudioOutput(m_audioOutput);
-
-    // 设置音量
-    m_audioOutput->setVolume(1.0); // 设置最大音量
-    m_audioOutput->setMuted(false);
-    // 添加错误处理
-    connect(m_player, &QMediaPlayer::errorOccurred, this, [](QMediaPlayer::Error error, const QString &errorString) {
-        qDebug() << "Media error:" << error << " - " << errorString;
-    });
-
-    connect(m_player, &QMediaPlayer::mediaStatusChanged, this, [](QMediaPlayer::MediaStatus status) {
-        qDebug() << "Media status:" << status;
-    });
-    // 加载音乐文件
-    QString musicPath = ":/music/hh.mp3";  // 确保音乐文件在资源中
-
-    // 尝试加载音乐文件
-    if (QFile::exists(musicPath)) {
-        m_player->setSource(QUrl(musicPath));
-        // 设置循环播放
-        m_player->setLoops(QMediaPlayer::Infinite);
-        // 开始播放
-        m_player->play();
-        qDebug() << "start music";
-    } else {
-        qDebug() << "music not found:" << musicPath;
-    }
->>>>>>> d2e8884a263c5d8d42aa9272aa84950daadbd77b
 }
 
 // 绘图事件实现
