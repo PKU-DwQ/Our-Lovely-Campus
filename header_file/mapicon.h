@@ -11,13 +11,13 @@
 class MapIcon  : public QObject{
     Q_OBJECT
 public:
-    MapIcon(QString iconFilePath = "test",  const int normalNum = 20, const int clickNum = 11, int iconsize = 80);
+    MapIcon(QString iconFilePath,  const int normalNum = 20, const int clickNum = 11, int iconsize = 80);
     void setPosition(int x, int y);
     void setVisible(bool visible);
     bool isVisible() const;
     void draw(QPainter& painter, const QPoint& offset);
     QRect boundingRect(const QPoint& offset) const;
-    bool containsPoint(const QPoint& point, const QPoint& offset) const;
+    bool containsPoint(const QPoint& point) const;
     void onClicked();
     void switchIcon();
     void setNormal(bool normal);
@@ -26,7 +26,7 @@ public:
     bool m_visible;
     int current_icon_index;
     int iconsize;
-    const QString& iconFilePath;
+    QString iconFilePath;
     const int normalNum;
     const int clickNum;
     const int maxIndx;

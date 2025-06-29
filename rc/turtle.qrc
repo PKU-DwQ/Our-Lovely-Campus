@@ -1,8 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>icon/turtle/photo/1.jpg</file>
-        <file>icon/turtle/photo/2.jpg</file>
-        <file>icon/turtle/photo/3.jpg</file>
         <file>icon/turtle/0.png</file>
         <file>icon/turtle/1.png</file>
         <file>icon/turtle/10.png</file>
@@ -35,7 +32,6 @@
         <file>icon/turtle/8.png</file>
         <file>icon/turtle/9.png</file>
         <file>icon/turtle/path.json</file>
-        <file>icon/turtle/text.txt</file>
         <file>icon/turtle/31.png</file>
         <file>icon/turtle/32.png</file>
         <file>icon/turtle/33.png</file>

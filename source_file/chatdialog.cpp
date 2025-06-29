@@ -7,17 +7,40 @@
 #include <QVBoxLayout>
 #include <QSpacerItem>
 #include <QTimer>
+#include <QString>
 
 
-ChatDialog* makeChatDialog(MovingIcon* icon, ImageViewer* p){
-    return new ChatDialog(":/icon/" + icon->iconFilePath,
-                   2,
-                   "这是pku一只可爱的小乌龟,在未名湖里游啊游。",
-                   "您好！我是pku一只可爱的小乌龟,在未名湖里游啊游",
-                   "你是一只生活在未名湖里的乌龟，你的名字叫小北。你热爱北大，喜欢帮助游客和同学。请用可爱、活泼的语气回答问题。",
-                   "未名湖小龟",
-                   p);
+ChatDialog* makeChatDialog(MovingIcon* icon, ImageViewer* p) {
+    // 从文件读取对话内容
+    QString path = ":/text/" + icon->iconFilePath + ".txt";
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "can not open" + path;
+        return nullptr;
+    }
+
+    QTextStream in(&file);
+    QStringList lines;
+    while (!in.atEnd()) {
+        lines << in.readLine();
+    }
+    file.close();
+
+    // 确保文件中有足够的内容
+    if (lines.size() < 4) {
+        qWarning() << path + "not complete";
+        return nullptr;
+    }
+
+    return new ChatDialog(icon->iconFilePath,
+                          lines[4].toInt() - 1,
+                          lines[0],  // 描述文本
+                          lines[1],  // 欢迎语
+                          lines[2],  // 角色设定
+                          lines[3],  // 角色名称
+                          p);
 }
+
 ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText,
                        const QString&welcome, const QString& identity, const QString&name, QWidget *parent) :
     QDialog(parent), m_imagePath(imagePath), m_infoText(infoText),m_imagenum(num),welcomewords(welcome),Defaultidentity(identity),name(name) {
@@ -195,7 +218,7 @@ ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText
 
 void ChatDialog::loadCurrentImage() {
     // 构建图片目录路径
-    QDir imageDir(m_imagePath + "/photo");
+    QDir imageDir(":/photo/" + m_imagePath);
 
     // 获取所有支持的图片文件
     QStringList imageFiles = imageDir.entryList(

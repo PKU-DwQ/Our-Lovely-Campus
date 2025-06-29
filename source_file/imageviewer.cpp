@@ -36,14 +36,7 @@ void ImageViewer::setupMovingIcon() {
             }
         }
         this->update();
-    }); //更优的写法
-    /*
-    connect(m_switchTimer, &QTimer::timeout, this, [this]() {
-        //this->update();  // 明确调用无参版本
-    });
-    connect(m_moveTimer, &QTimer::timeout, turtle, &MovingIcon::moveAlongPath);
-    connect(m_switchTimer, &QTimer::timeout, cat, &MovingIcon::switchIcon);
-    connect(m_moveTimer, &QTimer::timeout, cat, &MovingIcon::moveAlongPath);*/
+    }); //更优的写法 避免一个个添加与关联
     // 启动定时器
     m_switchTimer->start(50);
     m_moveTimer->start(50);
@@ -120,7 +113,7 @@ QPoint ImageViewer::getOffset() const {
 void ImageViewer::mousePressEvent(QMouseEvent* event) {
     // 检查是否点击在图标上
     for (auto* icon : std::as_const(allIcon)) {  // 使用 std::as_const 替代 qAsConst
-        if (icon->containsPoint(event->pos(), m_offset)) {
+        if (icon->containsPoint(event->pos())) {
             //qDebug() << "Mouse click pos:" << event->pos();
             ChatDialog *chatDialog = makeChatDialog(icon, this);
             chatDialog->setAttribute(Qt::WA_DeleteOnClose);
@@ -135,7 +128,7 @@ void ImageViewer::mousePressEvent(QMouseEvent* event) {
 void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
     //qDebug() << "Mouse move pos:" << event->pos();  // 假设是 QGraphicsItem
     for (auto* icon : std::as_const(allIcon)) {  // 使用 std::as_const 替代 qAsConst
-        if (icon->containsPoint(event->pos(), m_offset)) {
+        if (icon->containsPoint(event->pos())) {
             icon->setNormal(false);
             update();
             event->accept(); // 消耗事件，表示已处理

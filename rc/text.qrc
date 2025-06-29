@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>text/turtle.txt</file>
+        <file>text/cat.txt</file>
+        <file>text/crane.txt</file>
+        <file>text/gecko.txt</file>
+        <file>text/pillar.txt</file>
+        <file>text/swan.txt</file>
+    </qresource>
+</RCC>

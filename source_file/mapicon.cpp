@@ -59,7 +59,7 @@ QRect MapIcon::boundingRect(const QPoint& offset) const {
         );
 }
 
-bool MapIcon::containsPoint(const QPoint& point, const QPoint& offset) const {
+bool MapIcon::containsPoint(const QPoint& point) const {
     return m_actualRect.contains(point);
 }
 

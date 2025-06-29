@@ -31,7 +31,9 @@
 
 - `./rc/` 所有的`.qrc`资源文件 
 
--`./rc/icon/<name>/` 名为`name`的图标所需的全部内容
+-`./rc/icon/<name>/` 名为`name`的图标动图效果所需的全部图片
+
+-`./rc/text/<name>.txt` 名为`name`图标的文字描述
 
 ### 动画实现
 
