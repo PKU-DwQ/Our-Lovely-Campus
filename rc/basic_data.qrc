@@ -4,5 +4,7 @@
         <file>image_database/cover_.png</file>
         <file>image_database/map.jpg</file>
         <file>../config.json</file>
+        <file>cloud/left.png</file>
+        <file>cloud/right.png</file>
     </qresource>
 </RCC>

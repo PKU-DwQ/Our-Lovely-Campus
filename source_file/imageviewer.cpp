@@ -2,6 +2,7 @@
 #include "header_file/movingicon.h"
 #include "header_file/chatdialog.h"
 #include "header_file/pathgenerator.h"
+#include "header_file/cloudanimation.h"
 #include <QFont>
 #include <QtCore>
 #include <QThread>
@@ -40,7 +41,9 @@ void ImageViewer::setupMovingIcon() {
     // 启动定时器
     m_switchTimer->start(50);
     m_moveTimer->start(50);
-
+    cloud = new CloudAnimation(this);
+    cloud->startCloudAnimation();
+    cloud->startCloudAnimation();
 }
 
 ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)

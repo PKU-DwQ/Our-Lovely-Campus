@@ -4,6 +4,8 @@
 //#include "imageviewer.h"
 #include "header_file/navigationwidget.h"
 #include "header_file/coverwidget.h"
+
+
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);

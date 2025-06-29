@@ -48,7 +48,6 @@
         <file>icon/gecko/7.png</file>
         <file>icon/gecko/8.png</file>
         <file>icon/gecko/9.png</file>
-        <file>icon/gecko/rename.ps1</file>
         <file>icon/gecko/path.json</file>
     </qresource>
 </RCC>

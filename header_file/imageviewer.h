@@ -10,6 +10,7 @@
 #include <QFocusEvent>
 #include <QDebug>
 #include "header_file/movingicon.h"
+#include "header_file/cloudanimation.h"
 
 class ImageViewer : public QWidget {
     Q_OBJECT
@@ -33,6 +34,7 @@ public:
     QList<MovingIcon*> allIcon;
     QTimer* m_switchTimer;
     QTimer* m_moveTimer;
+    CloudAnimation* cloud;
 };
 
 #endif // IMAGEVIEWER_H

@@ -17,7 +17,8 @@ SOURCES += \
     source_file/coverwidget.cpp  \
     source_file/pathgenerator.cpp \
     source_file/chatdialog.cpp \
-    source_file/imageviewer.cpp
+    source_file/imageviewer.cpp \
+    source_file/cloudanimation.cpp
 
 HEADERS += \
     header_file/chatdialog.h \
@@ -28,7 +29,7 @@ HEADERS += \
     header_file/navigationwidget.h \
     header_file/coverwidget.h  \
     header_file/pathgenerator.h \
-
+    header_file/cloudanimation.h
 FORMS += \
     ui/chatdialog.ui \
     ui/imagewidget.ui \
