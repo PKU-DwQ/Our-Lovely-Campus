@@ -145,7 +145,7 @@ ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText
 
     // 创建图片容器（使用自定义控件）
     m_imageContainer = new ImageWidget(this);
-    m_imageContainer->setFixedSize(180, 180);
+    m_imageContainer->setFixedSize(240, 180);
 
     navLayout->addWidget(m_imageContainer);
     navLayout->addWidget(m_nextButton);
@@ -167,11 +167,13 @@ ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText
         "   font-size: 14px;"
         "   color: black;"
         "}");
-    m_infoLabel->setFixedWidth(350); // 固定宽度以保持布局整齐
+    m_infoLabel->setFixedWidth(300); // 固定宽度以保持布局整齐
 
     // 将图片区域和信息区域添加到顶部布局
+    topLayout->addStretch(1); // 左侧弹性空间
     topLayout->addLayout(imageLayout);
     topLayout->addWidget(m_infoLabel);
+    topLayout->addStretch(1); // 右侧弹性空间
 
     // === 聊天区域布局 ===
     chatHistory = new QTextEdit(this);
@@ -204,7 +206,7 @@ ChatDialog::ChatDialog(const QString& imagePath,int num, const QString& infoText
     addMessage(name, welcomewords);
     loadCurrentImage();
 
-    // 设置AI角色为乌龟（后台操作，不显示）
+    // 设置AI角色
     QTimer::singleShot(100, this, [this]() {
         // 构建系统消息（不显示在界面上）
         QJsonObject systemMessage;
