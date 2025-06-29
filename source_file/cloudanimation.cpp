@@ -13,6 +13,7 @@ CloudAnimation::CloudAnimation(QWidget *parent)
 
 CloudAnimation::~CloudAnimation()
 {
+
     // 清理资源（如果动画未执行完）
     if (m_cloudCoverLeft) m_cloudCoverLeft->deleteLater();
     if (m_cloudCoverRight) m_cloudCoverRight->deleteLater();
@@ -24,7 +25,7 @@ void CloudAnimation::initCloudCovers()
     m_cloudCoverLeft->setAttribute(Qt::WA_TranslucentBackground);
     m_cloudCoverRight->setAttribute(Qt::WA_TranslucentBackground);
 
-    // 加载云朵图片（确保资源文件已正确配置）
+    // 加载云朵图片
     QPixmap leftCloud(":/cloud/left.png");
     QPixmap rightCloud(":/cloud/right.png");
 
