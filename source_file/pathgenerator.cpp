@@ -99,7 +99,6 @@ QList<QPoint> PathGenerator::generateFromJson(const QJsonObject& config) {
         }
     }
     else if (type == "polyline") {
-<<<<<<< HEAD
         // 折线路径生成
         QPoint start(pathSettings["startPoint"].toArray()[0].toInt(),
                      pathSettings["startPoint"].toArray()[1].toInt());
@@ -109,30 +108,6 @@ QList<QPoint> PathGenerator::generateFromJson(const QJsonObject& config) {
         bool closed = pathSettings.value("closed").toBool(false);
 
         QList<QPoint> allPoints;
-=======
-    // 折线路径生成
-    QPoint start(pathSettings["startPoint"].toArray()[0].toInt(),
-                 pathSettings["startPoint"].toArray()[1].toInt());
-    QPoint end(pathSettings["endPoint"].toArray()[0].toInt(),
-               pathSettings["endPoint"].toArray()[1].toInt());
-    int step = pathSettings.value("step").toInt(5);
-    bool closed = pathSettings.value("closed").toBool(false);
-
-    QList<QPoint> allPoints;
-    allPoints << start;
-
-    // 添加所有途径点
-    QJsonArray wayPoints = pathSettings["wayPoints"].toArray();
-    for (const QJsonValue& point : wayPoints) {
-        allPoints << QPoint(point.toArray()[0].toInt(),
-                            point.toArray()[1].toInt());
-    }
-
-    allPoints << end;
-
-    // 如果路径是闭合的，添加回到起点的线段
-    if (closed) {
->>>>>>> b14541bae80a45de4be468db8ca4d936e48b5905
         allPoints << start;
 
         // 添加所有途径点
@@ -166,7 +141,6 @@ QList<QPoint> PathGenerator::generateFromJson(const QJsonObject& config) {
             }
         }
     }
-<<<<<<< HEAD
     else if (type == "static") {
         // 静态路径（保持原地不动）
         QPoint position(
@@ -187,7 +161,4 @@ QList<QPoint> PathGenerator::generateFromJson(const QJsonObject& config) {
         }
     }
     return path;
-=======
-    }return path;
->>>>>>> b14541bae80a45de4be468db8ca4d936e48b5905
 }
