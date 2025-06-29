@@ -1,5 +1,21 @@
 <RCC>
     <qresource prefix="/">
         <file>photo/turtle/0.jpg</file>
+        <file>photo/cat/0.jpg</file>
+        <file>photo/cat/1.jpg</file>
+        <file>photo/cat/2.jpg</file>
+        <file>photo/cat/3.jpg</file>
+        <file>photo/crane/0.jpg</file>
+        <file>photo/crane/1.jpg</file>
+        <file>photo/crane/2.jpg</file>
+        <file>photo/crane/3.jpg</file>
+        <file>photo/gecko/0.jpg</file>
+        <file>photo/gecko/1.jpg</file>
+        <file>photo/pillar/0.jpg</file>
+        <file>photo/pillar/1.jpg</file>
+        <file>photo/swan/0.jpg</file>
+        <file>photo/swan/1.jpg</file>
+        <file>photo/swan/2.jpg</file>
+        <file>photo/swan/3.jpg</file>
     </qresource>
 </RCC>

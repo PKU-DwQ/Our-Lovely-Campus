@@ -43,7 +43,6 @@ void ImageViewer::setupMovingIcon() {
     m_moveTimer->start(50);
     cloud = new CloudAnimation(this);
     cloud->startCloudAnimation();
-    cloud->startCloudAnimation();
 }
 
 ImageViewer::ImageViewer(const QString& imagePath, QWidget* parent)

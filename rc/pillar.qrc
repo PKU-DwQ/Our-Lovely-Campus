@@ -41,7 +41,6 @@
         <file>icon/pillar/9.png</file>
         <file>icon/pillar/rename.ps1</file>
         <file>icon/pillar/rename_wink.ps1</file>
-        <file>icon/pillar/path.json</file>
         <file>icon/pillar/0.png</file>
     </qresource>
 </RCC>
