@@ -47,8 +47,16 @@ CoverWidget::CoverWidget(QWidget *parent) : QWidget(parent) {
     m_player->setAudioOutput(m_audioOutput);
 
     // 设置音量
-    m_audioOutput->setVolume(50);  // 50% 音量
+    m_audioOutput->setVolume(1.0); // 设置最大音量
+    m_audioOutput->setMuted(false);
+    // 添加错误处理
+    connect(m_player, &QMediaPlayer::errorOccurred, this, [](QMediaPlayer::Error error, const QString &errorString) {
+        qDebug() << "Media error:" << error << " - " << errorString;
+    });
 
+    connect(m_player, &QMediaPlayer::mediaStatusChanged, this, [](QMediaPlayer::MediaStatus status) {
+        qDebug() << "Media status:" << status;
+    });
     // 加载音乐文件
     QString musicPath = ":/music/hh.mp3";  // 确保音乐文件在资源中
 
