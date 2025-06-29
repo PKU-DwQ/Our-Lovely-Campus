@@ -9,8 +9,8 @@
 #include <QTimer>
 
 
-ChatDialog* makeChatDialog(QString name, ImageViewer* p){
-    return new ChatDialog(":/icon/" + name,
+ChatDialog* makeChatDialog(MovingIcon* icon, ImageViewer* p){
+    return new ChatDialog(":/icon/" + icon->iconFilePath,
                    2,
                    "这是pku一只可爱的小乌龟,在未名湖里游啊游。",
                    "您好！我是pku一只可爱的小乌龟,在未名湖里游啊游",

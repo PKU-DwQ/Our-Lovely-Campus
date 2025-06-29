@@ -3,7 +3,9 @@
 #include "header_file/chatdialog.h"
 #include "header_file/pathgenerator.h"
 #include <QFont>
+#include <QtCore>
 #include <QThread>
+#include <utility>
 
 void ImageViewer::focusInEvent(QFocusEvent* event) {
     Q_UNUSED(event);
@@ -12,9 +14,13 @@ void ImageViewer::focusInEvent(QFocusEvent* event) {
 
 void ImageViewer::setupMovingIcon() {
 
-    //创建turtle活点
-    turtle = new MovingIcon("turtle", 20, 11, 80, 50, 50); // 切换间隔1秒，移动间隔50毫秒
-    cat = new MovingIcon("cat", 20, 10, 200, 30, 50);
+    //创建活点
+    crane = new MovingIcon("crane", 20, 49, 150);
+    gecko = new MovingIcon("gecko", 20, 27, 150);
+    pillar = new MovingIcon("pillar", 20, 20, 120);
+    turtle = new MovingIcon("turtle", 20, 30, 100); // 切换间隔1秒，移动间隔50毫秒
+    cat = new MovingIcon("cat", 20, 10, 150);
+    allIcon << cat << crane << gecko << pillar << turtle; //增加了allIcon 后面都不需要分别增加了, 直接遍历即可
     // 初始化定时器
     m_switchTimer = new QTimer(this);
     m_moveTimer = new QTimer(this);
@@ -23,14 +29,12 @@ void ImageViewer::setupMovingIcon() {
     Q_ASSERT(thread() == QThread::currentThread());
     connect(m_switchTimer, &QTimer::timeout, this, [this]() {
         // 检查对象是否有效
-        if(!turtle || !cat) {
-            qWarning() << "Icons are invalid!";
-            return;
+        for (auto* icon : std::as_const(allIcon)) {  // 使用 std::as_const 替代 qAsConst
+            if (icon) {
+                icon->switchIcon();
+                icon->moveAlongPath();
+            }
         }
-        turtle->switchIcon();
-        turtle->moveAlongPath();
-        cat->switchIcon();
-        cat->moveAlongPath();
         this->update();
     }); //更优的写法
     /*
@@ -71,14 +75,13 @@ void ImageViewer::paintEvent(QPaintEvent* event)
 
     // 绘制地图图标 信息栏
     // 绘制移动图标
-    qDebug() << "Turtle position:" << turtle->m_position;
-    qDebug() << "Cat position:" << cat->m_position;
-    if (turtle)
-        turtle->draw(painter, m_offset);
-    if (cat)
-        cat->draw(painter, m_offset);
-
-
+    //qDebug() << "Turtle position:" << turtle->m_position;
+    //qDebug() << "Cat position:" << cat->m_position;
+    for (auto* icon : std::as_const(allIcon)) {  // 使用 std::as_const 替代 qAsConst
+        if (icon) {
+            icon->draw(painter, m_offset);
+        }
+    }
     painter.fillRect(0, 0, width(), 30, QColor(0, 0, 0, 150));
     painter.setPen(Qt::white);
     painter.setFont(QFont("Arial", 10));
@@ -116,47 +119,31 @@ QPoint ImageViewer::getOffset() const {
 
 void ImageViewer::mousePressEvent(QMouseEvent* event) {
     // 检查是否点击在图标上
-    // 检查是否点击在图标上
-    if (turtle->containsPoint(event->pos(), m_offset)) {
-        //qDebug() << "Mouse click pos:" << event->pos();
-        ChatDialog *chatDialog = makeChatDialog("turtle", this);
-        chatDialog->setAttribute(Qt::WA_DeleteOnClose);
-        chatDialog->show();
-        update();
-        event->accept(); // 消耗事件，表示已处理
+    for (auto* icon : std::as_const(allIcon)) {  // 使用 std::as_const 替代 qAsConst
+        if (icon->containsPoint(event->pos(), m_offset)) {
+            //qDebug() << "Mouse click pos:" << event->pos();
+            ChatDialog *chatDialog = makeChatDialog(icon, this);
+            chatDialog->setAttribute(Qt::WA_DeleteOnClose);
+            chatDialog->show();
+            update();
+            event->accept(); // 消耗事件，表示已处理
+        }
     }
-    else if (cat->containsPoint(event->pos(), m_offset)) {
-        //qDebug() << "Mouse click pos:" << event->pos();
-        ChatDialog *chatDialog = makeChatDialog("turtle", this);
-        chatDialog->setAttribute(Qt::WA_DeleteOnClose);
-        chatDialog->show();
-        update();
-        event->accept(); // 消耗事件，表示已处理
-    }
-    else {
-        QWidget::mousePressEvent(event);
-    }
+    QWidget::mousePressEvent(event);
 }
 
 void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
     //qDebug() << "Mouse move pos:" << event->pos();  // 假设是 QGraphicsItem
-    if (turtle->containsPoint(event->pos(), m_offset)) {
-        turtle->setNormal(false);
-        update();
-        event->accept(); // 消耗事件，表示已处理
-    }
-    else{
-        turtle->setNormal(true); //这里掩盖了isnormal初始化的错误
-        event->accept();
-    }
-    if (cat->containsPoint(event->pos(), m_offset)) {
-        cat->setNormal(false);
-        update();
-        event->accept(); // 消耗事件，表示已处理
-    }
-    else{
-        cat->setNormal(true);
-        event->accept();
+    for (auto* icon : std::as_const(allIcon)) {  // 使用 std::as_const 替代 qAsConst
+        if (icon->containsPoint(event->pos(), m_offset)) {
+            icon->setNormal(false);
+            update();
+            event->accept(); // 消耗事件，表示已处理
+        }
+        else{
+            icon->setNormal(true); //这里掩盖了isnormal初始化的错误
+            event->accept();
+        }
     }
 }
 

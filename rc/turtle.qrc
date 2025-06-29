@@ -36,5 +36,25 @@
         <file>icon/turtle/9.png</file>
         <file>icon/turtle/path.json</file>
         <file>icon/turtle/text.txt</file>
+        <file>icon/turtle/31.png</file>
+        <file>icon/turtle/32.png</file>
+        <file>icon/turtle/33.png</file>
+        <file>icon/turtle/34.png</file>
+        <file>icon/turtle/35.png</file>
+        <file>icon/turtle/36.png</file>
+        <file>icon/turtle/37.png</file>
+        <file>icon/turtle/38.png</file>
+        <file>icon/turtle/39.png</file>
+        <file>icon/turtle/40.png</file>
+        <file>icon/turtle/41.png</file>
+        <file>icon/turtle/42.png</file>
+        <file>icon/turtle/43.png</file>
+        <file>icon/turtle/44.png</file>
+        <file>icon/turtle/45.png</file>
+        <file>icon/turtle/46.png</file>
+        <file>icon/turtle/47.png</file>
+        <file>icon/turtle/48.png</file>
+        <file>icon/turtle/49.png</file>
+        <file>icon/turtle/rename.ps1</file>
     </qresource>
 </RCC>

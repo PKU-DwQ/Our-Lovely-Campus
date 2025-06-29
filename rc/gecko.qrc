@@ -1,1 +1,54 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/">
+        <file>icon/gecko/0.png</file>
+        <file>icon/gecko/1.png</file>
+        <file>icon/gecko/10.png</file>
+        <file>icon/gecko/11.png</file>
+        <file>icon/gecko/12.png</file>
+        <file>icon/gecko/13.png</file>
+        <file>icon/gecko/14.png</file>
+        <file>icon/gecko/15.png</file>
+        <file>icon/gecko/16.png</file>
+        <file>icon/gecko/17.png</file>
+        <file>icon/gecko/18.png</file>
+        <file>icon/gecko/19.png</file>
+        <file>icon/gecko/2.png</file>
+        <file>icon/gecko/20.png</file>
+        <file>icon/gecko/21.png</file>
+        <file>icon/gecko/22.png</file>
+        <file>icon/gecko/23.png</file>
+        <file>icon/gecko/24.png</file>
+        <file>icon/gecko/25.png</file>
+        <file>icon/gecko/26.png</file>
+        <file>icon/gecko/27.png</file>
+        <file>icon/gecko/28.png</file>
+        <file>icon/gecko/29.png</file>
+        <file>icon/gecko/3.png</file>
+        <file>icon/gecko/30.png</file>
+        <file>icon/gecko/31.png</file>
+        <file>icon/gecko/32.png</file>
+        <file>icon/gecko/33.png</file>
+        <file>icon/gecko/34.png</file>
+        <file>icon/gecko/35.png</file>
+        <file>icon/gecko/36.png</file>
+        <file>icon/gecko/37.png</file>
+        <file>icon/gecko/38.png</file>
+        <file>icon/gecko/39.png</file>
+        <file>icon/gecko/4.png</file>
+        <file>icon/gecko/40.png</file>
+        <file>icon/gecko/41.png</file>
+        <file>icon/gecko/42.png</file>
+        <file>icon/gecko/43.png</file>
+        <file>icon/gecko/44.png</file>
+        <file>icon/gecko/45.png</file>
+        <file>icon/gecko/46.png</file>
+        <file>icon/gecko/47.png</file>
+        <file>icon/gecko/5.png</file>
+        <file>icon/gecko/6.png</file>
+        <file>icon/gecko/7.png</file>
+        <file>icon/gecko/8.png</file>
+        <file>icon/gecko/9.png</file>
+        <file>icon/gecko/rename.ps1</file>
+        <file>icon/gecko/path.json</file>
+    </qresource>
+</RCC>

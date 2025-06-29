@@ -49,5 +49,6 @@ RESOURCES += \
     rc/cat.qrc \
     rc/crane.qrc \
     rc/gecko.qrc \
+    rc/pillar.qrc \
     rc/swan.qrc \
     rc/turtle.qrc

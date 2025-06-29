@@ -57,5 +57,5 @@ private:
     QString Defaultidentity;
     QString name;
 };
-ChatDialog* makeChatDialog(QString name, ImageViewer* p);
+ChatDialog* makeChatDialog(MovingIcon* icon, ImageViewer* p);
 #endif // CHATDIALOG_H

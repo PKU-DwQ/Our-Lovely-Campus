@@ -27,6 +27,10 @@ public:
     QPoint m_offset;
     MovingIcon* turtle;
     MovingIcon* cat;
+    MovingIcon* crane;
+    MovingIcon* gecko;
+    MovingIcon* pillar;
+    QList<MovingIcon*> allIcon;
     QTimer* m_switchTimer;
     QTimer* m_moveTimer;
 };

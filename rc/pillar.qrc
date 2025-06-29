@@ -1,0 +1,47 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icon/pillar/1.png</file>
+        <file>icon/pillar/10.png</file>
+        <file>icon/pillar/11.png</file>
+        <file>icon/pillar/12.png</file>
+        <file>icon/pillar/13.png</file>
+        <file>icon/pillar/14.png</file>
+        <file>icon/pillar/15.png</file>
+        <file>icon/pillar/16.png</file>
+        <file>icon/pillar/17.png</file>
+        <file>icon/pillar/18.png</file>
+        <file>icon/pillar/19.png</file>
+        <file>icon/pillar/2.png</file>
+        <file>icon/pillar/20.png</file>
+        <file>icon/pillar/21.png</file>
+        <file>icon/pillar/22.png</file>
+        <file>icon/pillar/23.png</file>
+        <file>icon/pillar/24.png</file>
+        <file>icon/pillar/25.png</file>
+        <file>icon/pillar/26.png</file>
+        <file>icon/pillar/27.png</file>
+        <file>icon/pillar/28.png</file>
+        <file>icon/pillar/29.png</file>
+        <file>icon/pillar/3.png</file>
+        <file>icon/pillar/30.png</file>
+        <file>icon/pillar/31.png</file>
+        <file>icon/pillar/32.png</file>
+        <file>icon/pillar/33.png</file>
+        <file>icon/pillar/34.png</file>
+        <file>icon/pillar/35.png</file>
+        <file>icon/pillar/36.png</file>
+        <file>icon/pillar/37.png</file>
+        <file>icon/pillar/38.png</file>
+        <file>icon/pillar/39.png</file>
+        <file>icon/pillar/4.png</file>
+        <file>icon/pillar/5.png</file>
+        <file>icon/pillar/6.png</file>
+        <file>icon/pillar/7.png</file>
+        <file>icon/pillar/8.png</file>
+        <file>icon/pillar/9.png</file>
+        <file>icon/pillar/rename.ps1</file>
+        <file>icon/pillar/rename_wink.ps1</file>
+        <file>icon/pillar/path.json</file>
+        <file>icon/pillar/0.png</file>
+    </qresource>
+</RCC>
