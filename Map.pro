@@ -50,6 +50,7 @@ RESOURCES += \
     rc/cat.qrc \
     rc/crane.qrc \
     rc/gecko.qrc \
+    rc/path.qrc \
     rc/photo.qrc \
     rc/pillar.qrc \
     rc/swan.qrc \

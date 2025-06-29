@@ -71,6 +71,5 @@
         <file>icon/crane/8.png</file>
         <file>icon/crane/9.png</file>
         <file>icon/crane/rename.ps1</file>
-        <file>icon/crane/path.json</file>
     </qresource>
 </RCC>

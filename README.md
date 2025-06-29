@@ -31,11 +31,11 @@
 
 - `./rc/` 所有的`.qrc`资源文件 
 
--`./rc/icon/<name>/` 名为`name`的图标动图效果所需的全部图片
+- `./rc/icon/<name>/` 名为`name`的图标动图效果所需的全部图片
 
--`./rc/text/<name>.txt` 名为`name`图标的文字描述
+- `./rc/text/<name>.txt` 名为`name`图标的文字描述
 
--`./rc/photo/<name>/` 文件夹之下为名为`name`图标的实拍图像
+- `./rc/photo/<name>/` 文件夹之下为名为`name`图标的实拍图像
 
 ### 动画实现
 
