@@ -61,7 +61,7 @@ void CloudAnimation::initCloudCovers()
 
 void CloudAnimation::startCloudAnimation()
 {
-    QTimer::singleShot(1000, this, [this]() {
+    QTimer::singleShot(200, this, [this]() {
         QParallelAnimationGroup *animGroup = new QParallelAnimationGroup(this);
 
         // 左云朵向左滑动
