@@ -98,49 +98,50 @@ QList<QPoint> PathGenerator::generateFromJson(const QJsonObject& config) {
             path << QPoint(x, y);
         }
     }
+    else if (type == "polyline") {
+        // 折线路径生成
+        QPoint start(pathSettings["startPoint"].toArray()[0].toInt(),
+                     pathSettings["startPoint"].toArray()[1].toInt());
+        QPoint end(pathSettings["endPoint"].toArray()[0].toInt(),
+                   pathSettings["endPoint"].toArray()[1].toInt());
+        int step = pathSettings.value("step").toInt(5);
+        bool closed = pathSettings.value("closed").toBool(false);
 
-    return path;
-}
-else if (type == "polyline") {
-    // 折线路径生成
-    QPoint start(pathSettings["startPoint"].toArray()[0].toInt(),
-                 pathSettings["startPoint"].toArray()[1].toInt());
-    QPoint end(pathSettings["endPoint"].toArray()[0].toInt(),
-               pathSettings["endPoint"].toArray()[1].toInt());
-    int step = pathSettings.value("step").toInt(5);
-    bool closed = pathSettings.value("closed").toBool(false);
-
-    QList<QPoint> allPoints;
-    allPoints << start;
-
-    // 添加所有途径点
-    QJsonArray wayPoints = pathSettings["wayPoints"].toArray();
-    for (const QJsonValue& point : wayPoints) {
-        allPoints << QPoint(point.toArray()[0].toInt(),
-                            point.toArray()[1].toInt());
-    }
-
-    allPoints << end;
-
-    // 如果路径是闭合的，添加回到起点的线段
-    if (closed) {
+        QList<QPoint> allPoints;
         allPoints << start;
-    }
 
-    // 生成路径上的所有点
-    for (int i = 0; i < allPoints.size() - 1; ++i) {
-        QPoint current = allPoints[i];
-        QPoint next = allPoints[i + 1];
+        // 添加所有途径点
+        QJsonArray wayPoints = pathSettings["wayPoints"].toArray();
+        for (const QJsonValue& point : wayPoints) {
+            allPoints << QPoint(point.toArray()[0].toInt(),
+                                point.toArray()[1].toInt());
+        }
 
-        int dx = next.x() - current.x();
-        int dy = next.y() - current.y();
-        int steps = qMax(abs(dx), abs(dy)) / step;
+        allPoints << end;
 
-        for (int j = 0; j <= steps; ++j) {
-            float ratio = static_cast<float>(j) / steps;
-            int x = current.x() + dx * ratio;
-            int y = current.y() + dy * ratio;
-            path << QPoint(x, y);
+        // 如果路径是闭合的，添加回到起点的线段
+        if (closed) {
+            allPoints << start;
+        }
+
+        // 生成路径上的所有点
+        for (int i = 0; i < allPoints.size() - 1; ++i) {
+            QPoint current = allPoints[i];
+            QPoint next = allPoints[i + 1];
+
+            int dx = next.x() - current.x();
+            int dy = next.y() - current.y();
+            int steps = qMax(abs(dx), abs(dy)) / step;
+
+            for (int j = 0; j <= steps; ++j) {
+                float ratio = static_cast<float>(j) / steps;
+                int x = current.x() + dx * ratio;
+                int y = current.y() + dy * ratio;
+                path << QPoint(x, y);
+            }
         }
     }
+
+
+    return path;
 }

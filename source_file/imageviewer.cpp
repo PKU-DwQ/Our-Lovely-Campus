@@ -16,12 +16,13 @@ void ImageViewer::focusInEvent(QFocusEvent* event) {
 void ImageViewer::setupMovingIcon() {
 
     //创建活点
-    crane = new MovingIcon("crane", 18, 52, 150);
-    gecko = new MovingIcon("gecko", 20, 27, 150);
-    pillar = new MovingIcon("pillar", 20, 20, 120);
-    turtle = new MovingIcon("turtle", 18, 31, 100); // 切换间隔1秒，移动间隔50毫秒
-    cat = new MovingIcon("cat", 20, 10, 150);
-    allIcon << cat << crane << gecko << pillar << turtle; //增加了allIcon 后面都不需要分别增加了, 直接遍历即可
+    MovingIcon* crane = new MovingIcon("crane", 18, 52, 150);
+    MovingIcon* swan = new MovingIcon("swan", 21, 27, 200);
+    MovingIcon* gecko = new MovingIcon("gecko", 20, 27, 150);
+    MovingIcon* pillar = new MovingIcon("pillar", 20, 20, 120);
+    MovingIcon* turtle = new MovingIcon("turtle", 18, 31, 100); // 切换间隔1秒，移动间隔50毫秒
+    MovingIcon* cat = new MovingIcon("cat", 20, 17, 150);
+    allIcon << cat << crane << gecko << pillar << turtle << swan; //增加了allIcon 后面都不需要分别增加了, 直接遍历即可
     // 初始化定时器
     m_switchTimer = new QTimer(this);
     m_moveTimer = new QTimer(this);
