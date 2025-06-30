@@ -11,6 +11,7 @@
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
+
     QMediaPlayer *musicPlayer = new QMediaPlayer();
     QAudioOutput *audioOutput = new QAudioOutput();
     musicPlayer->setAudioOutput(audioOutput);

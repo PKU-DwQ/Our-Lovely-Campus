@@ -25,6 +25,8 @@ void ImageWidget::paintEvent(QPaintEvent* event) {
     painter.setPen(QPen(QColor(145, 213, 255), 1));
     painter.drawRect(rect().adjusted(0, 0, -1, -1));
 
+
+    // 2. 图片绘制逻辑
     if(!m_pixmap.isNull()) {
         // 缩放图片并保持宽高比
         QPixmap scaled = m_pixmap.scaled(m_scaledWidth, m_scaledHeight,

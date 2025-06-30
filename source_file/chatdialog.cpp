@@ -8,6 +8,7 @@
 #include <QSpacerItem>
 #include <QTimer>
 #include <QString>
+#include <QDebug>
 
 
 ChatDialog* makeChatDialog(MovingIcon* icon, ImageViewer* p) {
@@ -228,6 +229,7 @@ void ChatDialog::loadCurrentImage() {
         QDir::Files, QDir::Name
         );
 
+
     // 确保索引在有效范围内
     if (m_currentImageIndex < 0) m_currentImageIndex = imageFiles.size() - 1;
     if (m_currentImageIndex >= imageFiles.size()) m_currentImageIndex = 0;
@@ -236,7 +238,7 @@ void ChatDialog::loadCurrentImage() {
         // 构建完整图片路径
         QString imagePath = imageDir.filePath(imageFiles[m_currentImageIndex]);
         QPixmap pixmap(imagePath);
-
+        //qDebug() << imagePath;
         // 设置到图片控件
         if (!pixmap.isNull()) {
             m_imageContainer->setPixmap(pixmap);
